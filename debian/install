@@ -1,0 +1,12 @@
+locale.nopurge /etc/
+30-mio.conf /etc/sysctl.d/
+mizram /etc/init.d/
+cpupower.service /etc/systemd/system/
+kzombie /usr/bin/
+passgen-all /usr/bin/
+10mio /etc/apt/apt.conf.d/
+post-apt /usr/bin/
+coredump.conf /etc/systemd/
+miulimit.sh /etc/profile.d/
+sshd_config /etc/ssh/
+clearmem /usr/bin/

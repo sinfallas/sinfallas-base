@@ -1,0 +1,4 @@
+Acquire::Language "none";
+Acquire::PDiffs  "false";
+APT::Clean-Installed  "true";
+DPkg::Post-Invoke {"echo Optimizando, espere...;/usr/bin/post-apt";}

@@ -1,0 +1,224 @@
+#!/bin/bash
+
+case "$1" in
+	configure)
+	quien=$(who | cut -d' ' -f1 | sort | uniq)
+	ss=/home/$quien/.ssh
+	gg=/home/$quien/.gnupg
+	gdonde=$gg/gpg.conf
+	echo $quien
+	if ! [[ -f /root/.base ]]; then
+		echo "tmpfs /tmp tmpfs rw,async,nodev,noatime,nosuid,noexec 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/samba tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/apt/archives tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/apt/apt-fast tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
+		#echo "tmpfs /var/spool tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/tmp tmpfs rw,async,noexec,nodev,noatime,nosuid 0 0" >> /etc/fstab
+		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
+		echo "tmpfs /run tmpfs rw,nosuid,async,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
+		echo "tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0" >> /etc/fstab
+		sed -i "s/127.0.0.1\tlocalhost/127.0.0.1\tlocalhost $HOSTNAME/g" /etc/hosts
+		touch /root/.base
+	fi
+	if ! [[ -f /home/$quien/.gnupg/gpg.conf.old ]]; then
+		mkdir -p $gg
+		mv -f $gdonde $gg/gpg.conf.old
+		wget -q -O /tmp/gpg.conf - https://raw.githubusercontent.com/sinfallas/securegnupg/master/gpg.conf
+		mv -f /tmp/gpg.conf $gdonde
+		chown -R $quien:$quien $gg
+		chmod -R 700 $gg
+	fi
+	if ! [[ -f /usr/bin/mizram ]]; then
+		ln -s /etc/init.d/mizram /usr/bin/mizram
+	fi
+	if [[ -z $(grep -i lp /etc/modules) ]]; then
+		echo "lp" >> /etc/modules
+	fi
+	if [[ -z $(grep -i freevxfs /etc/modules) ]]; then
+		echo "freevxfs" >> /etc/modules
+	fi
+	if [[ -z $(grep -i jffs2 /etc/modules) ]]; then
+		echo "jffs2" >> /etc/modules
+	fi
+	if [[ -z $(grep -i udf /etc/modules) ]]; then
+		echo "udf" >> /etc/modules
+	fi
+	if [[ -z $(grep -i cramfs /etc/modules) ]]; then
+		echo "cramfs" >> /etc/modules
+	fi
+	if [[ -z $(grep -i hfs /etc/modules) ]]; then
+		echo "hfs" >> /etc/modules
+	fi
+	if [[ -z $(grep -i hfsplus /etc/modules) ]]; then
+		echo "hfsplus" >> /etc/modules
+	fi
+	if [[ -z $(grep -i "alias rotorar='unrar e -kb -y'" /etc/bash.bashrc) ]]; then
+		echo "alias rotorar='unrar e -kb -y'" >> /etc/bash.bashrc
+	fi
+	if [[ -z $(grep -i 'export HISTIGNORE="ls:clear"' /etc/bash.bashrc) ]]; then
+		echo 'export HISTIGNORE="ls:clear"' >> /etc/bash.bashrc
+	fi
+	if [[ -z $(grep -i "shopt -s checkwinsize" /etc/bash.bashrc) ]]; then
+		echo "shopt -s checkwinsize" >> /etc/bash.bashrc
+	fi
+	if [[ -z $(grep -i "HISTFILESIZE=2000" /etc/bash.bashrc) ]]; then
+		echo "HISTFILESIZE=2000" >> /etc/bash.bashrc
+	fi
+	if [[ -z $(grep -i "HISTSIZE=1000" /etc/bash.bashrc) ]]; then
+		echo "HISTSIZE=1000" >> /etc/bash.bashrc
+	fi
+	if [[ -z $(grep -i "HISTCONTROL=ignoreboth" /etc/bash.bashrc) ]]; then
+		echo "HISTCONTROL=ignoreboth" >> /etc/bash.bashrc
+	fi
+	if [[ -z $(grep -i 'INTEL_BATCH="1"' /etc/environment) ]]; then
+		echo 'INTEL_BATCH="1"' >> /etc/environment
+	fi
+	if [[ -z $(grep -i "#kernel.kptr_restrict = 1" /etc/sysctl.d/10-kernel-hardening.conf) ]]; then
+		sed -i 's/kernel.kptr_restrict = 1/#kernel.kptr_restrict = 1/g' /etc/sysctl.d/10-kernel-hardening.conf
+	fi
+	if [[ -z $(grep -i "#kernel.sysrq = 176" /etc/sysctl.d/10-magic-sysrq.conf) ]]; then
+		sed -i 's/kernel.sysrq = 176/#kernel.sysrq = 176/g' /etc/sysctl.d/10-magic-sysrq.conf
+	fi	
+	if [[ -z $(grep -i "#net.ipv4.conf.default.rp_filter=2" /etc/sysctl.d/10-network-security.conf) ]]; then
+		sed -i 's/net.ipv4.conf.default.rp_filter=2/#net.ipv4.conf.default.rp_filter=2/g' /etc/sysctl.d/10-network-security.conf
+	fi		
+	if [[ -z $(grep -i "#net.ipv4.conf.all.rp_filter=2" /etc/sysctl.d/10-network-security.conf) ]]; then
+		sed -i 's/net.ipv4.conf.all.rp_filter=2/#net.ipv4.conf.all.rp_filter=2/g' /etc/sysctl.d/10-network-security.conf
+	fi	
+	if [[ -z $(grep -i "#kernel.yama.ptrace_scope = 1" /etc/sysctl.d/10-ptrace.conf) ]]; then
+		sed -i 's/kernel.yama.ptrace_scope = 1/#kernel.yama.ptrace_scope = 1/g' /etc/sysctl.d/10-ptrace.conf
+	fi
+	if [[ -z $(grep -i 'WARNING: unauthorized access to this system is prohibited.' /etc/issue) ]]; then
+		echo 'WARNING: unauthorized access to this system is prohibited.' >> /etc/issue
+	fi
+	if [[ -z $(grep -i 'WARNING: unauthorized access to this system is prohibited.' /etc/issue.net) ]]; then
+		echo 'WARNING: unauthorized access to this system is prohibited.' >> /etc/issue.net
+	fi
+	if [[ -z $(grep -i '#Listen localhost:631' /etc/cups/cupsd.conf) ]]; then
+		sed -i 's/Listen localhost:631/#Listen localhost:631/g' /etc/cups/cupsd.conf
+		chmod 600 /etc/cups/cupsd.conf
+	fi
+	if [[ -f /etc/init.d/rc ]]; then
+		sed -i 's/umask 022/umask 027/g' /etc/init.d/rc
+	fi
+	if [[ -f /etc/cups/cups-browsed.conf ]]; then
+		sed -i 's/BrowseRemoteProtocols dnssd cups/BrowseRemoteProtocols none/g' /etc/cups/cups-browsed.conf
+		sed -i 's/# BrowseProtocols none/BrowseProtocols none/g' /etc/cups/cups-browsed.conf
+	fi
+	if [[ -f /etc/avahi/avahi-daemon.conf ]]; then
+		sed -i 's/#host-name=foo/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf
+	fi
+	if [[ -f /etc/login.defs ]]; then
+		sed -i 's/# SHA_CRYPT_MIN_ROUNDS 5000/SHA_CRYPT_MIN_ROUNDS 5000/g' /etc/login.defs
+		sed -i 's/# SHA_CRYPT_MAX_ROUNDS 5000/SHA_CRYPT_MAX_ROUNDS 10000/g' /etc/login.defs
+		sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t180/g' /etc/login.defs
+		sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/g' /etc/login.defs
+		sed -i 's/UMASK\t\t022/UMASK\t\t027/g' /etc/login.defs
+	fi
+	if [[ -f /etc/initramfs-tools/initramfs.conf ]]; then
+		sed -i 's/MODULES=most/MODULES=dep/g' /etc/initramfs-tools/initramfs.conf
+	fi	
+	if [[ -f /etc/adduser.conf ]]; then
+		sed -i 's_DSHELL=/bin/bash_DSHELL=/usr/bin/fish_g' /etc/adduser.conf
+	fi
+	if [[ -f /etc/default/keyboard ]]; then
+		sed -i 's/XKBOPTIONS=""/XKBOPTIONS="terminate:ctrl_alt_bksp"/g' /etc/default/keyboard
+	fi
+	if [[ -f /etc/passwd ]]; then
+		sed -i 's_/bin/bash_/usr/bin/fish_g' /etc/passwd
+	fi
+	if [[ -f /etc/default/prelink ]]; then
+		sed -i 's/PRELINKING=unknown/PRELINKING=yes/g' /etc/default/prelink
+		sed -i 's/PRELINK_OPTS=-mR/PRELINK_OPTS=-amR/g' /etc/default/prelink
+	fi
+	if [[ -f /etc/rkhunter.conf ]]; then
+		sed -i 's\UPDATE_MIRRORS=0\UPDATE_MIRRORS=1\g' /etc/rkhunter.conf
+		sed -i 's\MIRRORS_MODE=1\MIRRORS_MODE=0\g' /etc/rkhunter.conf
+		sed -i 's\WEB_CMD="/bin/false"\#WEB_CMD="/bin/false"\g' /etc/rkhunter.conf
+		sed -i 's\SCRIPTWHITELIST=/usr/bin/egrep\SCRIPTWHITELIST=/bin/egrep\g' /etc/rkhunter.conf
+		sed -i 's\SCRIPTWHITELIST=/usr/bin/fgrep\SCRIPTWHITELIST=/bin/fgrep\g' /etc/rkhunter.conf
+	fi
+	if [[ -f /etc/default/motd-news ]]; then
+		sed -i 's\ENABLED=1\ENABLED=0\g' /etc/default/motd-news
+	fi
+	if [[ -f /etc/systemd/system.conf ]]; then
+		sed -i 's\#DefaultTimeoutStopSec=90s\DefaultTimeoutStopSec=10s\g' /etc/systemd/system.conf
+	fi
+	if [[ $(dpkg --get-selections | grep -w "ssh" | awk '{print $1}' | head -1) = ssh ]]; then
+		mkdir -p $ss
+		chown -R $quien:$quien $ss
+		chmod -R 700 $ss
+	fi
+	if ! [[ -d /home/$quien/.config/autostart ]]; then
+		mkdir -p /home/$quien/.config/autostart
+	fi
+	yes "" | sensors-detect
+	echo "password requisite pam_cracklib.so retry=3 minlen=16 difok=3 ucredit=-1 lcredit=-2 dcredit=-2 ocredit=-2" > /etc/pam.d/common-password
+	echo "password [success=1 default=ignore] pam_unix.so obscure use_authtok try_first_pass sha512 rounds=65536" >> /etc/pam.d/common-password
+	echo "password requisite pam_deny.so" >> /etc/pam.d/common-password
+	echo "password required pam_permit.so" >> /etc/pam.d/common-password
+	echo "password optional pam_gnome_keyring.so" >> /etc/pam.d/common-password
+	echo "#!/bin/sh" > /usr/local/sbin/cgroup_clean
+	echo "rmdir /sys/fs/cgroup/cpu/$*" >> /usr/local/sbin/cgroup_clean
+	echo "# /etc/security/limits.conf" > /etc/security/limits.conf
+	echo "* hard core 0" >> /etc/security/limits.conf
+	echo "* hard nproc 1000" >> /etc/security/limits.conf
+	echo "* soft nofile 2000" >> /etc/security/limits.conf
+	echo "* hard nofile 2000" >> /etc/security/limits.conf
+	echo "# End of file" >> /etc/security/limits.conf
+	echo "net.ipv6.conf.all.disable_ipv6 = 1" > /etc/sysctl.d/60-disableipv6.conf
+	echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.d/60-disableipv6.conf
+	echo "net.ipv6.conf.lo.disable_ipv6 = 1" >> /etc/sysctl.d/60-disableipv6.conf
+	echo "kernel/mm/transparent_hugepage/enabled" = always > /etc/sysfs.conf
+	echo "kernel/mm/transparent_hugepage/khugepaged/pages_to_scan = 20000" >> /etc/sysfs.conf
+	echo "kernel/mm/ksm/run = 1" >> /etc/sysfs.conf
+	echo "kernel/mm/ksm/pages_to_scan = 20000" >> /etc/sysfs.conf
+	echo "kernel/mm/ksm/sleep_millisecs = 200" >> /etc/sysfs.conf
+	echo "fs/cgroup/cpu/notify_on_release = 1" >> /etc/sysfs.conf
+	echo "fs/cgroup/cpu/release_agent = /usr/local/sbin/cgroup_clean" >> /etc/sysfs.conf
+	#echo "devices/system/cpu/intel_pstate/no_turbo = 1" >> /etc/sysfs.conf
+	echo "[Journal]" > /etc/systemd/journald.conf
+	echo "SystemMaxUse=50M" >> /etc/systemd/journald.conf
+	echo "multi on" > /etc/host.conf
+	echo "order hosts,bind" >> /etc/host.conf
+	echo "SIZE=128M" > /etc/log2ram.conf
+	echo "USE_RSYNC=true" >> /etc/log2ram.conf
+	echo "MAIL=false" >> /etc/log2ram.conf
+	echo 'PATH_DISK="/var/log"' >> /etc/log2ram.conf
+	echo "ZL2R=false" >> /etc/log2ram.conf
+	echo "COMP_ALG=lz4" >> /etc/log2ram.conf
+	echo "LOG_DISK_SIZE=100M" >> /etc/log2ram.conf
+	sed -i 's/GRUB_TIMEOUT_STYLE=hidden/GRUB_TIMEOUT_STYLE=menu/g' /etc/default/grub
+	sed -i 's/GRUB_TIMEOUT=0/GRUB_TIMEOUT=3/g' /etc/default/grub	
+	chmod 444 /usr/libexec/evolution-calendar-factory
+	chmod +x /usr/local/sbin/cgroup_clean
+	chmod +x /etc/init.d/mizram
+	chmod +x /usr/bin/kzombie
+	chmod +x /usr/bin/passgen-all
+	chmod +x /usr/bin/post-apt
+	chmod +x /usr/bin/clearmem
+	chmod +x /etc/profile.d/miulimit.sh
+	update-rc.d mizram defaults
+	wget -q -O /tmp/calc-mem https://raw.githubusercontent.com/sinfallas/calc-mem/master/calc-mem
+	chmod +x /tmp/calc-mem
+	source /tmp/calc-mem
+	rm -f /tmp/calc-mem
+	systemctl daemon-reload
+	systemctl enable cpupower.service
+	echo "America/Caracas" > /etc/timezone
+	dpkg-reconfigure --frontend noninteractive tzdata
+	update-initramfs -k all -u
+	update-grub2
+	;;
+
+	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear|abort-deconfigure|abort-remove)
+	;;
+
+	*)
+		echo "postinst fue invocado con argumentos desconocidos \`$1'" >&2
+		exit 1
+	;;
+esac
+
+#DEBHELPER#
+exit 0

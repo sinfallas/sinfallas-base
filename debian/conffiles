@@ -1,0 +1,8 @@
+/etc/locale.nopurge
+/etc/sysctl.d/30-mio.conf
+/etc/init.d/mizram
+/etc/systemd/system/cpupower.service
+/etc/apt/apt.conf.d/10mio
+/etc/systemd/coredump.conf
+/etc/profile.d/miulimit.sh
+/etc/ssh/sshd_config

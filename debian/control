@@ -1,0 +1,17 @@
+Source: sinfallas-base
+Section: metapackages
+Priority: standard
+Maintainer: Jesus Palencia <sinfallas@gmail.com>
+Build-Depends: debhelper, cdbs
+Standards-Version: 3.9.5
+Homepage: https://sinfallas.wordpress.com/
+Vcs-Bzr: lp:~sinfallas/+junk/sinfallas-base
+
+Package: sinfallas-base
+Architecture: all
+Depends: testdisk, curl, intel-microcode, prelink, ppa-purge, pv, localepurge, linux-firmware, hwdata, fish, printer-driver-cups-pdf, sysfsutils, debian-handbook, net-tools, traceroute, ssh, tmux, ssh-askpass, iftop, powertop, htop, iotop, rar, pigz, p7zip-full, p7zip-rar, sharutils, mpack, arj, atool, lzop, nmap, rkhunter, gnupg2, gpgv, linux-tools-generic, lm-sensors, apt-transport-https, usbguard, libpam-cracklib, acpi, log2ram, mtr-tiny, sshguard, lsof, psmisc, secure-delete, extundelete, ${misc:Depends}, ${shlibs:Depends}, ${perl:Depends}
+Conflicts: zeitgeist, rhythmbox-plugin-zeitgeist, zeitgeist-core, zeitgeist-datahub, aptitude, transmission-common
+Description: sinfallas-base
+ Homepage: https://sinfallas.wordpress.com/
+ Bugs: https://bugs.launchpad.net/~sinfallas
+ Mis programas basicos para ubuntu

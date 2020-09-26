@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# Made by Sinfallas <sinfallas@yahoo.com>
+# Licence: GPL-2
+LC_ALL=C
+trap "rm -f /run/$(basename $0).pid; exit" 0 1 2 3 15
+
+case "$1" in
+	1)
+		if [[ -z $2 ]]; then
+			date +%s | sha256sum | base64 | head -c 8;echo
+		else
+			date +%s | sha256sum | base64 | head -c "$2";echo
+		fi
+		;;
+
+	2)
+		if [[ -z $2 ]]; then
+			< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 8;echo;
+		else
+			< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c "$2";echo;
+		fi
+		;;
+
+	3)
+		if [[ -z $2 ]]; then
+			openssl rand -base64 32 | tr -dc _A-Z-a-z-0-9 | cut -c 1-8
+		else
+			openssl rand -base64 32 | tr -dc _A-Z-a-z-0-9 | cut -c 1-"$2"
+		fi
+		;;
+
+	4)
+		if [[ -z $2 ]]; then
+			tr -cd '[:alnum:]' < /dev/urandom | fold -w8 | head -n1
+		else
+			tr -cd '[:alnum:]' < /dev/urandom | fold -w"$2" | head -n1
+		fi
+		;;
+
+	5)
+		if [[ -z $2 ]]; then
+			strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 8 | tr -d '\n';echo
+		else
+			strings /dev/urandom | grep -o '[[:alnum:]]' | head -n "$2" | tr -d '\n';echo
+		fi
+		;;
+
+	6)
+		if [[ -z $2 ]]; then
+			dd if=/dev/urandom bs=1 count=64 2>/dev/null | base64 -w 0 | tr -dc _A-Z-a-z-0-9 | cut -c 1-8
+		else
+			dd if=/dev/urandom bs=1 count=64 2>/dev/null | base64 -w 0 | tr -dc _A-Z-a-z-0-9 | cut -c 1-"$2"
+		fi
+		;;
+
+	*)
+		echo "Seleccione el metodo para generar la clave"
+		echo "uso: $(basename $0) {1|2|3|4|5|6} longitud"
+		;;
+
+esac
+exit 0
