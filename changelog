@@ -1,4 +1,16 @@
-commit 9b8c64e43b993b68d6ebe020517440f437d71f97 (HEAD -> master, origin/master, origin/HEAD)
+commit 4e57d46e5a4c576c0e26f8ae901f809826cf7e9b (HEAD -> master, origin/master, origin/HEAD)
+Author: config <Palencia>
+Date:   Sun Oct 4 00:00:53 2020 -0400
+
+    * update
+
+commit d88e443fdb95467f51a7820929b5d00d3c6d1bbb
+Author: config <Palencia>
+Date:   Sat Sep 26 11:58:30 2020 -0400
+
+    * changelog
+
+commit 9b8c64e43b993b68d6ebe020517440f437d71f97
 Author: config <Palencia>
 Date:   Sat Sep 26 11:58:17 2020 -0400
 
