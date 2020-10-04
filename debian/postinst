@@ -144,6 +144,15 @@ case "$1" in
 	if [[ -f /etc/systemd/system.conf ]]; then
 		sed -i 's\#DefaultTimeoutStopSec=90s\DefaultTimeoutStopSec=10s\g' /etc/systemd/system.conf
 	fi
+	if [[ -f /etc/xdg/autostart/tracker-miner-fs.desktop ]]; then
+		mv -f /etc/xdg/autostart/tracker-miner-fs.desktop /root/
+		mv -f /etc/xdg/autostart/tracker-extract.desktop /root/		
+		mv -f /etc/xdg/autostart/tracker-miner-apps.desktop /root/
+		mv -f /etc/xdg/autostart/tracker-miner-user-guides.desktop /root/	
+		mv -f /etc/xdg/autostart/tracker-store.desktop /root/
+		chmod -v 666 tracker-miner-fs
+		chmod -v 666 tracker-store		
+	fi
 	if [[ $(dpkg --get-selections | grep -w "ssh" | awk '{print $1}' | head -1) = ssh ]]; then
 		mkdir -p $ss
 		chown -R $quien:$quien $ss

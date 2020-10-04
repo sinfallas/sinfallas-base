@@ -1,4 +1,60 @@
 ------------------------------------------------------------
+revno: 148
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 23:08:19 -0400
+message:
+  * correcciones a mizram
+------------------------------------------------------------
+revno: 147
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 15:01:45 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 146
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 15:01:17 -0400
+message:
+  * se coloca avahi-daemon como conflicto
+------------------------------------------------------------
+revno: 145
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 11:45:13 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 144
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 11:44:54 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 143
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 11:27:35 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 142
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 11:26:02 -0400
+message:
+  * se desactiva tracker-miner-fs
+------------------------------------------------------------
+revno: 141
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-09-19 20:21:25 -0400
+message:
+  * changelog
+------------------------------------------------------------
 revno: 140
 committer: Jesus Palencia sinfallas@gmail.com
 branch nick: sinfallas-base
