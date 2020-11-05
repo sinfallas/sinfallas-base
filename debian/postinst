@@ -8,16 +8,25 @@ case "$1" in
 	gdonde=$gg/gpg.conf
 	echo $quien
 	if ! [[ -f /root/.base ]]; then
-		echo "tmpfs /tmp tmpfs rw,async,nodev,noatime,nosuid,noexec 0 0" >> /etc/fstab
-		echo "tmpfs /var/cache/samba tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
-		echo "tmpfs /var/cache/apt/archives tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
-		echo "tmpfs /var/cache/apt/apt-fast tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
-		#echo "tmpfs /var/spool tmpfs rw,noatime,async,nodev 0 0" >> /etc/fstab
-		echo "tmpfs /var/tmp tmpfs rw,async,noexec,nodev,noatime,nosuid 0 0" >> /etc/fstab
+		echo "tmpfs /tmp tmpfs rw,nodev,noatime,nosuid,noexec 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/samba tmpfs rw,noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/apt/archives tmpfs rw,noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/apt/apt-fast tmpfs rw,noatime,nodev 0 0" >> /etc/fstab
+		#echo "tmpfs /var/spool tmpfs rw,noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/tmp tmpfs rw,noexec,nodev,noatime,nosuid 0 0" >> /etc/fstab
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
-		echo "tmpfs /run tmpfs rw,nosuid,async,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
+		echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
 		echo "tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0" >> /etc/fstab
 		sed -i "s/127.0.0.1\tlocalhost/127.0.0.1\tlocalhost $HOSTNAME/g" /etc/hosts
+		if [[ -f /etc/initramfs-tools/initramfs.conf ]]; then
+			sed -i 's/MODULES=most/MODULES=dep/g' /etc/initramfs-tools/initramfs.conf
+			update-initramfs -c -k all
+		fi
+		sed -i 's/GRUB_TIMEOUT_STYLE=hidden/GRUB_TIMEOUT_STYLE=menu/g' /etc/default/grub
+		sed -i 's/GRUB_TIMEOUT=0/GRUB_TIMEOUT=3/g' /etc/default/grub
+		update-grub2
+		echo "America/Caracas" > /etc/timezone
+		dpkg-reconfigure --frontend noninteractive tzdata
 		touch /root/.base
 	fi
 	if ! [[ -f /home/$quien/.gnupg/gpg.conf.old ]]; then
@@ -115,9 +124,6 @@ case "$1" in
 		sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/g' /etc/login.defs
 		sed -i 's/UMASK\t\t022/UMASK\t\t027/g' /etc/login.defs
 	fi
-	if [[ -f /etc/initramfs-tools/initramfs.conf ]]; then
-		sed -i 's/MODULES=most/MODULES=dep/g' /etc/initramfs-tools/initramfs.conf
-	fi	
 	if [[ -f /etc/adduser.conf ]]; then
 		sed -i 's_DSHELL=/bin/bash_DSHELL=/usr/bin/fish_g' /etc/adduser.conf
 	fi
@@ -143,15 +149,19 @@ case "$1" in
 	fi
 	if [[ -f /etc/systemd/system.conf ]]; then
 		sed -i 's\#DefaultTimeoutStopSec=90s\DefaultTimeoutStopSec=10s\g' /etc/systemd/system.conf
+		sed -i 's\#CtrlAltDelBurstAction=reboot-force\CtrlAltDelBurstAction=reboot-force\g' /etc/systemd/system.conf
 	fi
 	if [[ -f /etc/xdg/autostart/tracker-miner-fs.desktop ]]; then
 		mv -f /etc/xdg/autostart/tracker-miner-fs.desktop /root/
-		mv -f /etc/xdg/autostart/tracker-extract.desktop /root/		
+		mv -f /etc/xdg/autostart/tracker-extract.desktop /root/
 		mv -f /etc/xdg/autostart/tracker-miner-apps.desktop /root/
-		mv -f /etc/xdg/autostart/tracker-miner-user-guides.desktop /root/	
+		mv -f /etc/xdg/autostart/tracker-miner-user-guides.desktop /root/
 		mv -f /etc/xdg/autostart/tracker-store.desktop /root/
-		chmod -v 666 tracker-miner-fs
-		chmod -v 666 tracker-store		
+		chmod 666 /usr/libexec/tracker-miner-fs
+		#chmod 666 /usr/libexec/tracker-store
+		chmod 666 /usr/libexec/tracker-extract
+		chmod 666 /usr/libexec/tracker-writeback
+		echo "TimeoutStartSec=2" >> /usr/share/dbus-1/services/org.freedesktop.Tracker1.service
 	fi
 	if [[ $(dpkg --get-selections | grep -w "ssh" | awk '{print $1}' | head -1) = ssh ]]; then
 		mkdir -p $ss
@@ -197,8 +207,6 @@ case "$1" in
 	echo "ZL2R=false" >> /etc/log2ram.conf
 	echo "COMP_ALG=lz4" >> /etc/log2ram.conf
 	echo "LOG_DISK_SIZE=100M" >> /etc/log2ram.conf
-	sed -i 's/GRUB_TIMEOUT_STYLE=hidden/GRUB_TIMEOUT_STYLE=menu/g' /etc/default/grub
-	sed -i 's/GRUB_TIMEOUT=0/GRUB_TIMEOUT=3/g' /etc/default/grub	
 	chmod 444 /usr/libexec/evolution-calendar-factory
 	chmod +x /usr/local/sbin/cgroup_clean
 	chmod +x /etc/init.d/mizram
@@ -214,10 +222,6 @@ case "$1" in
 	rm -f /tmp/calc-mem
 	systemctl daemon-reload
 	systemctl enable cpupower.service
-	echo "America/Caracas" > /etc/timezone
-	dpkg-reconfigure --frontend noninteractive tzdata
-	update-initramfs -k all -u
-	update-grub2
 	;;
 
 	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear|abort-deconfigure|abort-remove)

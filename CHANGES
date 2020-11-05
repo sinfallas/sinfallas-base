@@ -1,4 +1,186 @@
 ------------------------------------------------------------
+revno: 174
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2020-11-04 20:01:29 -0400
+message:
+  * se unifican dependencias de otros paquetes
+------------------------------------------------------------
+revno: 173
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2020-11-04 19:44:56 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 172
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2020-11-04 19:44:26 -0400
+message:
+  * mas dependecias para armar un sistema basico a partir de un net-install
+------------------------------------------------------------
+revno: 171
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-11-01 22:47:07 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 170
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-11-01 22:46:32 -0400
+message:
+  * se agrega bashtop como dependencia
+------------------------------------------------------------
+revno: 169
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2020-10-28 20:34:59 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 168
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2020-10-28 20:34:33 -0400
+message:
+  * mejoras en la red en sysctl
+------------------------------------------------------------
+revno: 167
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-18 15:42:58 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 166
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-18 15:42:44 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 165
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-18 15:32:28 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 164
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-18 15:32:12 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 163
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-18 13:44:20 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 162
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-18 13:44:00 -0400
+message:
+  * se reorganiza el codigo
+------------------------------------------------------------
+revno: 161
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-17 17:38:54 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 160
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-17 17:38:38 -0400
+message:
+  * postrm
+------------------------------------------------------------
+revno: 159
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2020-10-14 16:35:50 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 158
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2020-10-14 16:35:28 -0400
+message:
+  * se quita async de tmpfs
+------------------------------------------------------------
+revno: 157
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-10 23:52:04 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 156
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-10 23:51:37 -0400
+message:
+  * se agrega reinicio forzado por teclas
+------------------------------------------------------------
+revno: 155
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-10 23:39:23 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 154
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-10 23:39:08 -0400
+message:
+  * limpieza
+------------------------------------------------------------
+revno: 153
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2020-10-05 19:12:53 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 152
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2020-10-05 19:12:14 -0400
+message:
+  * se impide la ejecucion de algunos tracker
+------------------------------------------------------------
+revno: 151
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-04 16:10:51 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 150
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2020-10-04 16:05:50 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 149
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2020-10-03 23:22:43 -0400
+message:
+  * changelog
+------------------------------------------------------------
 revno: 148
 committer: Jesus Palencia sinfallas@gmail.com
 branch nick: sinfallas-base

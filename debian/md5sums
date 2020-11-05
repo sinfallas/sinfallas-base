@@ -1,9 +1,9 @@
 e14d5348e1424eb7c5d3e097088a37eb  etc/locale.nopurge
-dab5b5628598c7b2baeb4f8cf081b40d  etc/sysctl.d/30-mio.conf
+a90a99f93f34912b12fbf1b349429b1e  etc/sysctl.d/30-mio.conf
 66f209f0115b3d4e1391fb6fe40fddcc  etc/init.d/mizram
 f60df7b97a7ce9199474e92db91dbd81  etc/systemd/system/cpupower.service
 155680afe90912d835fa3873b9114b18  usr/bin/passgen-all
-b63a78fdc3dcdfc436ee39ce039b6c5e  usr/bin/kzombie
+9b23255730a7abc3381cbb737957c916  usr/bin/kzombie
 c42383058dedd0a486c038f890866f2f  etc/apt/apt.conf.d/10mio
 5da4dfba00be8467bdbe05cb4980b7b6  usr/bin/post-apt
 62acf75ea81a17e703d97bc37424e5aa  etc/systemd/coredump.conf
