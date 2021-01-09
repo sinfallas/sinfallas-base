@@ -24,6 +24,9 @@ case "$1" in
 		rm -f /etc/sysctl.d/60-disableipv6.conf
 		rm -f /etc/sysfs.conf
 		rm -f /root/.base
+		rm -f /usr/bin/mizram
+		rm -f /usr/share/gpg.conf.sample
+		rm -f /usr/bin/sinfallas-base
 	;;
 
 	upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)

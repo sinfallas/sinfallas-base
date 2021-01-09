@@ -1,5 +1,5 @@
 e14d5348e1424eb7c5d3e097088a37eb  etc/locale.nopurge
-a90a99f93f34912b12fbf1b349429b1e  etc/sysctl.d/30-mio.conf
+9a8b3bc4363c656e420659a039780532  etc/sysctl.d/30-mio.conf
 66f209f0115b3d4e1391fb6fe40fddcc  etc/init.d/mizram
 f60df7b97a7ce9199474e92db91dbd81  etc/systemd/system/cpupower.service
 155680afe90912d835fa3873b9114b18  usr/bin/passgen-all
@@ -10,3 +10,5 @@ c42383058dedd0a486c038f890866f2f  etc/apt/apt.conf.d/10mio
 d56f8e5cb4ea747c87227aa5b0586e29  etc/profile.d/miulimit.sh
 991ab9a020d04c53238e0c883869d3c2  etc/ssh/sshd_config
 e95865ceebcd1e4c36088e11872992a5  usr/bin/clearmem
+093194ce2f374a85f7c13ce750be5437  usr/bin/sinfallas-base
+e1693f88d73df93364fa16b6824223de  usr/share/gpg.conf.sample

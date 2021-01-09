@@ -10,3 +10,5 @@ coredump.conf /etc/systemd/
 miulimit.sh /etc/profile.d/
 sshd_config /etc/ssh/
 clearmem /usr/bin/
+sinfallas-base /usr/bin/
+gpg.conf.sample /usr/share/
