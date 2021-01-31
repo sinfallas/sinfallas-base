@@ -11,9 +11,9 @@ quien=$(who | cut -d' ' -f1 | sort | uniq)
 ss=/home/$quien/.ssh
 gg=/home/$quien/.gnupg
 gdonde=$gg/gpg.conf
+name="/etc/sysctl.d/10-calc-mem.conf"
 
 function calcmem() {
-	name="/etc/sysctl.d/10-calc-mem.conf"
 	memor=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 	mb=$(( $memor * 1024 ))
 	mf=$(( $memor * 3/100 ))
@@ -72,8 +72,7 @@ function exit_error() {
 	exit 1
 }
 
-trap "clean_1; exit" 0 1 2 3 15
-clear
+trap "clean_1; exit" 0 1 2 3 9 15
 if [[ "$EUID" != "0" ]]; then
 	echo -e "\e[00;31mERROR: Debes ser root.\e[00m"
 	exit 1
@@ -260,6 +259,11 @@ if [[ $(dpkg --get-selections | grep -w "ssh" | awk '{print $1}' | head -1) = ss
 	mkdir -p $ss
 	chown -R $quien:$quien $ss
 	chmod -R 700 $ss
+	if ! [[ -f /etc/ssh/moduli.old ]]; then
+		awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp
+		mv -f /etc/ssh/moduli /etc/ssh/moduli.old
+		mv -f /etc/ssh/moduli.tmp /etc/ssh/moduli
+	fi
 fi
 if ! [[ -d /home/$quien/.config/autostart ]]; then
 	mkdir -p /home/$quien/.config/autostart
@@ -267,14 +271,26 @@ fi
 if ! [[ -d /etc/sysctl.d ]]; then
 	mkdir -p /etc/sysctl.d
 fi
+if [[ -z $(grep -i 'if [ "$PS1" ] ;' /home/$quien/.bashrc) ]]; then
+	echo 'if [ "$PS1" ] ;' >> /home/$quien/.bashrc
+	echo '	then mkdir -m 0700 /dev/cgroup/cpu/user/$$' >> /home/$quien/.bashrc
+	echo '	echo $$ > /dev/cgroup/cpu/user/$$/tasks' >> /home/$quien/.bashrc
+	echo '	echo "1" > /dev/cgroup/cpu/user/$$/notify_on_release' >> /home/$quien/.bashrc
+	echo 'fi' >> /home/$quien/.bashrc
+fi
+if [[ -z $(grep -i 'if [ "$PS1" ] ;' /root/.bashrc) ]]; then
+	echo 'if [ "$PS1" ] ;' >> /root/.bashrc
+	echo '	then mkdir -m 0700 /dev/cgroup/cpu/user/$$' >> /root/.bashrc
+	echo '	echo $$ > /dev/cgroup/cpu/user/$$/tasks' >> /root/.bashrc
+	echo '	echo "1" > /dev/cgroup/cpu/user/$$/notify_on_release' >> /root/.bashrc
+	echo 'fi' >> /root/.bashrc
+fi
 yes "" | sensors-detect
 echo "password requisite pam_cracklib.so retry=3 minlen=16 difok=3 ucredit=-1 lcredit=-2 dcredit=-2 ocredit=-2" > /etc/pam.d/common-password
 echo "password [success=1 default=ignore] pam_unix.so obscure use_authtok try_first_pass sha512 rounds=65536" >> /etc/pam.d/common-password
 echo "password requisite pam_deny.so" >> /etc/pam.d/common-password
 echo "password required pam_permit.so" >> /etc/pam.d/common-password
 echo "password optional pam_gnome_keyring.so" >> /etc/pam.d/common-password
-echo "#!/bin/sh" > /usr/local/sbin/cgroup_clean
-echo "rmdir /sys/fs/cgroup/cpu/$*" >> /usr/local/sbin/cgroup_clean
 echo "# /etc/security/limits.conf" > /etc/security/limits.conf
 echo "* hard core 0" >> /etc/security/limits.conf
 echo "* hard nproc 1000" >> /etc/security/limits.conf
@@ -290,7 +306,7 @@ echo "kernel/mm/ksm/run = 1" >> /etc/sysfs.conf
 echo "kernel/mm/ksm/pages_to_scan = 20000" >> /etc/sysfs.conf
 echo "kernel/mm/ksm/sleep_millisecs = 200" >> /etc/sysfs.conf
 echo "fs/cgroup/cpu/notify_on_release = 1" >> /etc/sysfs.conf
-echo "fs/cgroup/cpu/release_agent = /usr/local/sbin/cgroup_clean" >> /etc/sysfs.conf
+echo "fs/cgroup/cpu/release_agent = /usr/bin/cgroup_clean" >> /etc/sysfs.conf
 #echo "devices/system/cpu/intel_pstate/no_turbo = 1" >> /etc/sysfs.conf
 echo "[Journal]" > /etc/systemd/journald.conf
 echo "SystemMaxUse=50M" >> /etc/systemd/journald.conf
@@ -310,9 +326,7 @@ sed -i 's/rotate 4/rotate 1/g' /etc/logrotate.d/rsyslog
 sed -i 's/weekly/daily/g' /etc/logrotate.d/rsyslog
 sed -i 's/#SystemMaxFiles=100/SystemMaxFiles=7/g' /etc/systemd/journald.conf	
 chmod 444 /usr/libexec/evolution-calendar-factory
-chmod +x /usr/local/sbin/cgroup_clean
 calcmem
-
 echo "Finalizado $(date +%d/%m/%Y)" >> $mylog
 echo "Duracion $SECONDS segundos" >> $mylog
 echo "Duracion $SECONDS segundos"

@@ -20,13 +20,15 @@ case "$1" in
 		mv -f /root/tracker-miner-apps.desktop /etc/xdg/autostart/
 		mv -f /root/tracker-miner-user-guides.desktop /etc/xdg/autostart/
 		mv -f /root/tracker-store.desktop /etc/xdg/autostart/
-		rm -f /usr/local/sbin/cgroup_clean
 		rm -f /etc/sysctl.d/60-disableipv6.conf
 		rm -f /etc/sysfs.conf
 		rm -f /root/.base
 		rm -f /usr/bin/mizram
 		rm -f /usr/share/gpg.conf.sample
 		rm -f /usr/bin/sinfallas-base
+		rm -f /etc/ssh/moduli
+		mv -f /etc/ssh/moduli.old /etc/ssh/moduli
+		rm -f /usr/bin/cgroup_clean
 	;;
 
 	upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)

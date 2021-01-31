@@ -22,6 +22,10 @@ case "$1" in
 	zramctl -f -t 2 -s 100MB -a lz4
 	mkswap /dev/zram0
 	swapon --priority 10 /dev/zram0
+	mkdir -p /dev/cgroup/cpu
+	mount -t cgroup cgroup /dev/cgroup/cpu -o cpu
+	mkdir -m 0777 /dev/cgroup/cpu/user
+	echo "/usr/bin/cgroup_clean" > /dev/cgroup/cpu/release_agent
 	;;
   stop)
 	swapoff /dev/zram0

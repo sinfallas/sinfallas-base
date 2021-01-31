@@ -9,6 +9,7 @@ case "$1" in
 		chmod +x /usr/bin/post-apt
 		chmod +x /usr/bin/clearmem
 		chmod +x /usr/bin/sinfallas-base
+		chmod +x /usr/bin/cgroup_clean
 		update-rc.d mizram defaults
 		systemctl daemon-reload
 		systemctl enable cpupower.service
