@@ -10,6 +10,7 @@ case "$1" in
 		chmod +x /usr/bin/clearmem
 		chmod +x /usr/bin/sinfallas-base
 		chmod +x /usr/bin/cgroup_clean
+		chmod +x /usr/bin/mistatus
 		update-rc.d mizram defaults
 		systemctl daemon-reload
 		systemctl enable cpupower.service

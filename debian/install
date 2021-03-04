@@ -13,3 +13,4 @@ clearmem /usr/bin/
 sinfallas-base /usr/bin/
 gpg.conf.sample /usr/share/
 cgroup_clean /usr/bin/
+mistatus /usr/bin/

@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# Made by Sinfallas <sinfallas@yahoo.com>
+# Licence: GPL-2
+LC_ALL=C
+quien=$(who | cut -d' ' -f1 | sort | uniq)
+
+if [[ "$EUID" != "0" ]]; then
+	echo -e "\e[00;31mERROR: Debes ser root.\e[00m"
+	exit 1
+fi
+
+clear
+echo -e "\e[00;1;92mEstado de AppArmor (yes)\e[00m"
+aa-enabled
+echo ""
+echo -e "\e[00;1;92mEstado de la swap\e[00m"
+swapon -s
+echo ""
+echo -e "\e[00;1;92mEstado de puntos de montaje tmpfs\e[00m"
+mount | grep "tmpfs"
+echo ""
+echo -e "\e[00;1;92mEstado del punto de montaje cgroup\e[00m"
+mount | grep "/sys/fs/cgroup/systemd"
+echo -e "\e[00;1;92mCgroup release agent\e[00m"
+cat /dev/cgroup/cpu/release_agent
+echo -e "\e[00;1;92mEstado de cgroup notify on release (1)\e[00m"
+cat /sys/fs/cgroup/cpu/notify_on_release
+echo ""
+echo -e "\e[00;1;92mEstado de KSM (1)\e[00m"
+cat /sys/kernel/mm/ksm/run
+echo ""
+echo -e "\e[00;1;92mEstado de transparent_hugepage\e[00m"
+cat /sys/kernel/mm/transparent_hugepage/enabled
+echo ""
+echo -e "\e[00;1;92mEstado de DIR_MODE en adduser (0750)\e[00m"
+cat /etc/adduser.conf | grep "DIR_MODE=0750"
+echo ""
+echo -e "\e[00;1;92mEstado de prelink\e[00m"
+cat /etc/default/prelink | grep "PRELINKING=yes"
+cat /etc/default/prelink | grep "PRELINK_OPTS=-amR"
+echo ""
+echo -e "\e[00;1;92mConfiguracion de limits\e[00m"
+cat /etc/security/limits.conf
+echo ""
+echo -e "\e[00;1;92mValores de calc-mem\e[00m"
+cat /etc/sysctl.d/10-calc-mem.conf
+echo ""
+echo -e "\e[00;1;92mEstado de IPv6 (1)\e[00m"
+sysctl --all | grep "net.ipv6.conf.all.disable_ipv6"
+echo ""
+echo -e "\e[00;1;92mEstado de overcommit memory (1)\e[00m"
+sysctl --all | grep "vm.overcommit_memory"
+echo ""
+echo -e "\e[00;1;92mEstado de unprivileged bpf (1)\e[00m"
+sysctl --all | grep "kernel.unprivileged_bpf_disabled"
+echo ""
+echo -e "\e[00;1;92mEstado de kexec load (1)\e[00m"
+sysctl --all | grep "kernel.kexec_load_disabled"
+echo ""
+echo -e "\e[00;1;92mEstado de sysrq (0)\e[00m"
+sysctl --all | grep "kernel.sysrq"
+echo ""
+echo -e "\e[00;1;92mEstado de autogroup (1)\e[00m"
+sysctl --all | grep "kernel.sched_autogroup_enabled"
+echo ""
+echo -e "\e[00;1;92mEstado de randomize_va_space (2)\e[00m"
+sysctl --all | grep "kernel.randomize_va_space"
+echo ""
+echo -e "\e[00;1;92mEstado de kptr_restrict (2)\e[00m"
+sysctl --all | grep "kernel.kptr_restrict"
+echo ""
+echo -e "\e[00;1;92mEstado de dmesg (1)\e[00m"
+sysctl --all | grep "kernel.dmesg_restrict"
+echo ""
+echo -e "\e[00;1;92mEstado de suid_dumpable (0)\e[00m"
+sysctl --all | grep "fs.suid_dumpable"
+echo ""
+echo -e "\e[00;1;92mEstado de protected_hardlinks (1)\e[00m"
+sysctl --all | grep "fs.protected_hardlinks"
+echo ""
+echo -e "\e[00;1;92mEstado de protected_symlinks (1)\e[00m"
+sysctl --all | grep "fs.protected_symlinks"
+echo ""
+echo -e "\e[00;1;92mEstado de Log2RAM (ON)\e[00m"
+systemctl status log2ram
+echo ""
+echo -e "\e[00;1;92mEstado de SSH (ON)\e[00m"
+systemctl status ssh
+echo ""
+echo -e "\e[00;1;92mEstado de SSHGuard (ON)\e[00m"
+systemctl status sshguard
+echo ""
+echo -e "\e[00;1;92mJaulas de Firejail activas\e[00m"
+firejail --list
+echo ""
+echo -e "\e[00;1;92mDispositivos USB autorizados\e[00m"
+usbguard list-devices
+echo ""
+echo -e "\e[00;1;92mFinalizado.\e[00m"
+exit 0

@@ -9,9 +9,9 @@ Vcs-Bzr: lp:~sinfallas/+junk/sinfallas-base
 
 Package: sinfallas-base
 Architecture: all
-Depends: bashtop, testdisk, curl, intel-microcode, prelink, ppa-purge, pv, localepurge, linux-firmware, hwdata, fish, printer-driver-cups-pdf, sysfsutils, debian-handbook, net-tools, traceroute, ssh, tmux, ssh-askpass, iftop, powertop, htop, iotop, rar, p7zip-full, p7zip-rar, atool, nmap, rkhunter, gnupg2, gpgv, linux-tools-generic, lm-sensors, apt-transport-https, usbguard, libpam-cracklib, acpi, log2ram, mtr-tiny, sshguard, lsof, psmisc, secure-delete, extundelete, base-files, bash, bsdutils, coreutils, diffutils, dmsetup, findutils, grep, hostname, kmod, less, lsb-base, nano, ncurses-base, ncurses-bin, readline-common, sed, sudo, upower, util-linux, util-linux-locales, wget, deborphan, apt-fast, ${misc:Depends}, ${shlibs:Depends}, ${perl:Depends}
-Conflicts: zeitgeist, rhythmbox-plugin-zeitgeist, zeitgeist-core, zeitgeist-datahub, aptitude, transmission-common, avahi-daemon, avahi-utils, libnss-mdns, apport, avahi-autoipd, brltty, bsd-mailx, ubuntu-report
+Depends: bashtop, testdisk, curl, iucode-tool, prelink, ppa-purge, pv, localepurge, linux-firmware, hwdata, fish, printer-driver-cups-pdf, sysfsutils, net-tools, traceroute, ssh, tmux, iftop, powertop, htop, iotop, rar, p7zip-full, p7zip-rar, atool, nmap, rkhunter, gnupg2, gpgv, linux-tools-generic, linux-cloud-tools-generic, lm-sensors, apt-transport-https, usbguard, libpam-cracklib, acpi, log2ram, mtr-tiny, sshguard, lsof, psmisc, secure-delete, extundelete, base-files, bash, bsdutils, coreutils, diffutils, dmsetup, findutils, grep, hostname, kmod, less, lsb-base, nano, ncurses-base, ncurses-bin, readline-common, sed, sudo, upower, util-linux, util-linux-locales, wget, deborphan, apt-fast, apparmor-utils, firejail-profiles, ${misc:Depends}, ${shlibs:Depends}, ${perl:Depends}
+Conflicts: zeitgeist, rhythmbox-plugin-zeitgeist, zeitgeist-core, zeitgeist-datahub, aptitude, transmission-common, avahi-utils, apport, avahi-autoipd, brltty, bsd-mailx, ubuntu-report
 Description: sinfallas-base
  Homepage: https://sinfallas.wordpress.com/
  Bugs: https://bugs.launchpad.net/~sinfallas
- Mis programas y configuraciones basicas para ubuntu 20.04 Gnome
+ Programas y configuraciones basicas para ubuntu 20.04

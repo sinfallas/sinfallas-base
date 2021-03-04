@@ -1,34 +1,88 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 case "$1" in
 	remove|purge)
-		rm -f /etc/locale.nopurge
-		rm -f /etc/sysctl.d/30-mio.conf
-		rm -f /etc/init.d/mizram
-		rm -f /etc/systemd/system/cpupower.service
-		rm -f /usr/bin/kzombie
-		rm -f /usr/bin/passgen-all
-		rm -f /etc/apt/apt.conf.d/10mio
-		rm -f /usr/bin/post-apt
-		rm -f /etc/systemd/coredump.conf
-		rm -f /etc/profile.d/miulimit.sh
-		rm -f /etc/ssh/sshd_config
-		rm -f /usr/bin/clearmem
-		mv -f /root/tracker-miner-fs.desktop /etc/xdg/autostart/
-		mv -f /root/tracker-extract.desktop /etc/xdg/autostart/
-		mv -f /root/tracker-miner-apps.desktop /etc/xdg/autostart/
-		mv -f /root/tracker-miner-user-guides.desktop /etc/xdg/autostart/
-		mv -f /root/tracker-store.desktop /etc/xdg/autostart/
-		rm -f /etc/sysctl.d/60-disableipv6.conf
-		rm -f /etc/sysfs.conf
-		rm -f /root/.base
-		rm -f /usr/bin/mizram
-		rm -f /usr/share/gpg.conf.sample
-		rm -f /usr/bin/sinfallas-base
-		rm -f /etc/ssh/moduli
-		mv -f /etc/ssh/moduli.old /etc/ssh/moduli
-		rm -f /usr/bin/cgroup_clean
+		echo "" > /etc/locale.nopurge
+		echo "" > /etc/sysfs.conf
+		if [[ -f /etc/sysctl.d/30-mio.conf ]]; then
+			rm -f /etc/sysctl.d/30-mio.conf
+		fi
+		if [[ -f /etc/init.d/mizram ]]; then
+			rm -f /etc/init.d/mizram
+		fi
+		if [[ -f /etc/systemd/system/cpupower.service ]]; then
+			rm -f /etc/systemd/system/cpupower.service
+		fi
+		if [[ -f /usr/bin/kzombie ]]; then
+			rm -f /usr/bin/kzombie
+		fi
+		if [[ -f /usr/bin/passgen-all ]]; then
+			rm -f /usr/bin/passgen-all
+		fi
+		if [[ -f /etc/apt/apt.conf.d/10mio ]]; then
+			rm -f /etc/apt/apt.conf.d/10mio
+		fi
+		if [[ -f /usr/bin/post-apt ]]; then
+			rm -f /usr/bin/post-apt
+		fi
+		if [[ -f /etc/systemd/coredump.conf ]]; then
+			rm -f /etc/systemd/coredump.conf
+		fi
+		if [[ -f /etc/profile.d/miulimit.sh ]]; then
+			rm -f /etc/profile.d/miulimit.sh
+		fi
+		if [[ -f /etc/ssh/sshd_config ]]; then
+			rm -f /etc/ssh/sshd_config
+		fi
+		if [[ -f /usr/bin/clearmem ]]; then
+			rm -f /usr/bin/clearmem
+		fi
+		if [[ -f /usr/bin/mistatus ]]; then
+			rm -f /usr/bin/mistatus
+		fi		
+		if [[ -f /root/tracker-miner-fs.desktop ]]; then
+			mv -f /root/tracker-miner-fs.desktop /etc/xdg/autostart/
+		fi
+		if [[ -f /root/tracker-extract.desktop ]]; then
+			mv -f /root/tracker-extract.desktop /etc/xdg/autostart/
+		fi
+		if [[ -f /root/tracker-miner-apps.desktop ]]; then
+			mv -f /root/tracker-miner-apps.desktop /etc/xdg/autostart/
+		fi
+		if [[ -f /root/tracker-miner-user-guides.desktop ]]; then
+			mv -f /root/tracker-miner-user-guides.desktop /etc/xdg/autostart/
+		fi
+		if [[ -f /root/tracker-store.desktop ]]; then
+			mv -f /root/tracker-store.desktop /etc/xdg/autostart/
+		fi
+		if [[ -f /etc/sysctl.d/60-disableipv6.conf ]]; then
+			rm -f /etc/sysctl.d/60-disableipv6.conf
+		fi
+		if [[ -f /root/.base ]]; then
+			rm -f /root/.base
+		fi
+		if [[ -f /usr/bin/mizram ]]; then
+			rm -f /usr/bin/mizram
+		fi
+		if [[ -f /usr/share/gpg.conf.sample ]]; then
+			rm -f /usr/share/gpg.conf.sample
+		fi
+		if [[ -f /usr/bin/sinfallas-base ]]; then
+			rm -f /usr/bin/sinfallas-base
+		fi
+		if [[ -f /etc/ssh/moduli ]]; then
+			rm -f /etc/ssh/moduli
+		fi
+		if [[ -f /etc/ssh/moduli.old ]]; then
+			mv -f /etc/ssh/moduli.old /etc/ssh/moduli
+		fi
+		if [[ -f /usr/bin/cgroup_clean ]]; then
+			rm -f /usr/bin/cgroup_clean
+		fi
+		echo "" > /etc/sysctl.d/30-misecurity.conf
+		echo "Limpiando Firejail"
+		firecfg --clean
 	;;
 
 	upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)

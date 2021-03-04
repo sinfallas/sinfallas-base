@@ -26,6 +26,7 @@ case "$1" in
 	mount -t cgroup cgroup /dev/cgroup/cpu -o cpu
 	mkdir -m 0777 /dev/cgroup/cpu/user
 	echo "/usr/bin/cgroup_clean" > /dev/cgroup/cpu/release_agent
+	echo "1" > /sys/kernel/mm/ksm/run
 	;;
   stop)
 	swapoff /dev/zram0
