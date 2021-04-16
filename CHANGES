@@ -1,4 +1,993 @@
 ------------------------------------------------------------
+revno: 422
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-11 11:08:38 -0400
+message:
+  * se agrega una nueva dependencia
+------------------------------------------------------------
+revno: 421
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-10 22:44:47 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 420
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-10 22:44:32 -0400
+message:
+  * md5sum
+------------------------------------------------------------
+revno: 419
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-10 22:43:58 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 418
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-10 22:43:27 -0400
+message:
+  * se reorganiza el codigo
+  * se pone LP en blacklist
+------------------------------------------------------------
+revno: 417
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-10 18:44:48 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 416
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-10 18:44:17 -0400
+message:
+  * nueva dependencia
+  * se desactivan algunos servicios
+------------------------------------------------------------
+revno: 415
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-09 17:04:29 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 414
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-09 17:04:05 -0400
+message:
+  * se desactivan mas servicios
+------------------------------------------------------------
+revno: 413
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-08 23:01:06 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 412
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-08 23:00:40 -0400
+message:
+  * se desactivan mas servicios
+------------------------------------------------------------
+revno: 411
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 22:05:51 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 410
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 22:05:33 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 409
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 14:35:48 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 408
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 14:34:53 -0400
+message:
+  * se agrega thermald como dependencia y se agrega un configuracion adicional
+------------------------------------------------------------
+revno: 407
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 14:16:46 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 406
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 14:16:21 -0400
+message:
+  * pequenas mejoras
+------------------------------------------------------------
+revno: 405
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 00:15:27 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 404
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-06 00:15:05 -0400
+message:
+  * comprobacion de parametros de grub2
+------------------------------------------------------------
+revno: 403
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 23:55:55 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 402
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 23:55:24 -0400
+message:
+  * se agrega archivo securetty
+------------------------------------------------------------
+revno: 401
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 17:30:01 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 400
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 17:29:41 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 399
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 17:06:52 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 398
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 17:06:25 -0400
+message:
+  * pequenas mejoras al initramfs
+------------------------------------------------------------
+revno: 397
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 15:21:02 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 396
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-04-05 15:20:21 -0400
+message:
+  * se agrega zram-tools para mejorar el manejo de zram
+------------------------------------------------------------
+revno: 395
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-04 18:05:25 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 394
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-04 18:04:59 -0400
+message:
+  * securetty
+------------------------------------------------------------
+revno: 393
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-04 02:13:53 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 392
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-04 02:13:39 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 391
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-04 01:47:35 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 390
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-04 01:47:12 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 389
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 23:29:36 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 388
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 23:28:21 -0400
+message:
+  * se desactiva irqbalance
+  * se reduce el verbose del arranque del sistema
+  * se reduce el verbose de la salida del kernel
+------------------------------------------------------------
+revno: 387
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 16:43:00 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 386
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 16:42:40 -0400
+message:
+  * se desactiva bluetooth
+------------------------------------------------------------
+revno: 385
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 08:48:36 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 384
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 08:48:11 -0400
+message:
+  * trap bugfix
+------------------------------------------------------------
+revno: 383
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 08:39:18 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 382
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-03 08:35:40 -0400
+message:
+  * mejoras menores
+------------------------------------------------------------
+revno: 381
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 22:44:06 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 380
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 22:43:05 -0400
+message:
+  * se elimina rsyslog
+  * se desactiva el registro de ufw
+------------------------------------------------------------
+revno: 379
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 12:34:44 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 378
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 12:34:12 -0400
+message:
+  * wiperam.service bugfix
+------------------------------------------------------------
+revno: 377
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 12:01:26 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 376
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 12:00:58 -0400
+message:
+  * version final de wiperam
+------------------------------------------------------------
+revno: 375
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 00:08:19 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 374
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-04-02 00:08:02 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 373
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 23:53:24 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 372
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 23:53:07 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 371
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 23:50:59 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 370
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 23:49:07 -0400
+message:
+  * se separa la limpieza de ram
+------------------------------------------------------------
+revno: 369
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 22:07:06 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 368
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 22:06:46 -0400
+message:
+  * nueva forma de dependencia
+------------------------------------------------------------
+revno: 367
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 18:56:14 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 366
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 18:55:50 -0400
+message:
+  * se elimina la salida
+------------------------------------------------------------
+revno: 365
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 18:46:33 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 364
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-04-01 18:46:02 -0400
+message:
+  * bugfix
+  * se desactiva root
+------------------------------------------------------------
+revno: 363
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 23:18:31 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 362
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 23:18:08 -0400
+message:
+  * se desactivan servicios innecesarios
+------------------------------------------------------------
+revno: 361
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 19:11:56 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 360
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 19:11:24 -0400
+message:
+  * se elimina avahi-daemon
+------------------------------------------------------------
+revno: 359
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 15:26:19 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 358
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 15:25:38 -0400
+message:
+  * se agrega el servicio wiperam
+------------------------------------------------------------
+revno: 357
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 14:54:02 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 356
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-31 14:53:29 -0400
+message:
+  * se reemplaza una dependencia
+  * se agrega estado del governador del CPU
+------------------------------------------------------------
+revno: 355
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-28 17:58:42 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 354
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-28 17:58:24 -0400
+message:
+  * mejoras de uso de SED
+------------------------------------------------------------
+revno: 353
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-27 16:47:10 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 352
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-27 16:46:56 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 351
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-27 16:45:47 -0400
+message:
+  * se agregan mas conflictos de dependencias
+------------------------------------------------------------
+revno: 350
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-27 08:40:12 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 349
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-27 08:39:57 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 348
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-27 07:45:23 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 347
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-27 07:44:23 -0400
+message:
+  * permisos
+------------------------------------------------------------
+revno: 346
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-03-26 20:05:52 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 345
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-03-26 20:05:11 -0400
+message:
+  * mijail dropbox
+------------------------------------------------------------
+revno: 344
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-24 14:58:06 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 343
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-24 14:57:50 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 342
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 18:30:34 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 341
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 18:30:05 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 340
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 17:40:49 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 339
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 17:40:21 -0400
+message:
+  * se modifica el perfil de dropbox
+------------------------------------------------------------
+revno: 338
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 16:32:16 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 337
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 16:31:57 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 336
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 16:29:06 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 335
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 16:28:46 -0400
+message:
+  * sustitucion de variables
+------------------------------------------------------------
+revno: 334
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 16:17:16 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 333
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-23 16:16:15 -0400
+message:
+  * se modifica el mensaje post-apt
+  * se modifican parametros de montaje del fstab
+  * se cambia la cantidad minima de ram para el tmpfs .cache
+------------------------------------------------------------
+revno: 332
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-21 12:14:48 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 331
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-21 12:14:08 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 330
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-21 11:36:30 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 329
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-21 11:36:14 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 328
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-21 11:35:29 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 327
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-21 11:35:10 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 326
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-21 11:28:03 -0400
+message:
+  * mejoras y correcciones de errores
+------------------------------------------------------------
+revno: 325
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-17 21:57:11 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 324
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-17 21:56:26 -0400
+message:
+  * mejoras para la deteccion de usuarios y correccion de errores
+  * se eliminan los comentarios
+------------------------------------------------------------
+revno: 323
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-16 18:29:59 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 322
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-16 18:29:39 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 321
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-16 18:28:26 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 320
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-16 18:27:51 -0400
+message:
+  * nuevos parametros
+------------------------------------------------------------
+revno: 319
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-15 20:10:02 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 318
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-15 20:09:45 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 317
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-15 20:04:25 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 316
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-15 20:03:55 -0400
+message:
+  * se llama a mijail al finalizar
+------------------------------------------------------------
+revno: 315
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-15 20:02:54 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 314
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-15 20:02:13 -0400
+message:
+  * bugfix
+  * prelink tweaks
+------------------------------------------------------------
+revno: 313
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-14 13:39:37 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 312
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-14 13:38:54 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 311
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-14 12:06:30 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 310
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-14 12:05:30 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 309
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-14 12:05:10 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 308
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-14 11:50:00 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 307
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-14 11:49:32 -0400
+message:
+  * se agrega el script mijail
+------------------------------------------------------------
+revno: 306
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-13 12:33:39 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 305
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-13 12:33:18 -0400
+message:
+  * nuevos servicios
+------------------------------------------------------------
+revno: 304
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-13 09:24:52 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 303
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-13 09:24:33 -0400
+message:
+  * nuevos servicios
+------------------------------------------------------------
+revno: 302
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-13 09:02:19 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 301
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-03-13 09:01:50 -0400
+message:
+  * bugfix sinfallas-base
+  * nuevo servicio en mistatus
+------------------------------------------------------------
+revno: 300
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-09 20:06:31 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 299
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-09 20:05:53 -0400
+message:
+  * md5
+------------------------------------------------------------
+revno: 298
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-09 20:05:07 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 297
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-09 20:04:46 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 296
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-09 19:49:43 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 295
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-03-09 19:49:06 -0400
+message:
+  * nuevas dependencias
+  * nuevos conflictos
+  * hardening
+------------------------------------------------------------
+revno: 294
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-08 22:57:03 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 293
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-08 22:56:29 -0400
+message:
+  * correccion al cargar modulos
+  * se desactivan elementos innecesarios
+------------------------------------------------------------
+revno: 292
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-08 21:32:11 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 291
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Mon 2021-03-08 21:31:48 -0400
+message:
+  * se enmascaran servicios innecesarios
+------------------------------------------------------------
+revno: 290
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-07 09:25:18 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 289
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-03-07 09:24:58 -0400
+message:
+  * grub
+------------------------------------------------------------
+revno: 288
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-03-05 20:18:23 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 287
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-03-05 20:18:04 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 286
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-03-04 21:16:08 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 285
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-03-04 21:15:26 -0400
+message:
+  * nuevas comprobacion para mistatus
+  * bugfix en 30-mio.conf
+------------------------------------------------------------
+revno: 284
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-03-03 21:49:24 -0400
+message:
+  * changelog
+------------------------------------------------------------
 revno: 283
 committer: Jesus Palencia sinfallas@gmail.com
 branch nick: sinfallas-base

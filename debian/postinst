@@ -2,19 +2,25 @@
 
 case "$1" in
 	configure)
-		chmod +x /etc/init.d/mizram
-		chmod +x /etc/profile.d/miulimit.sh
-		chmod +x /usr/bin/kzombie
-		chmod +x /usr/bin/passgen-all
-		chmod +x /usr/bin/post-apt
-		chmod +x /usr/bin/clearmem
-		chmod +x /usr/bin/sinfallas-base
-		chmod +x /usr/bin/cgroup_clean
-		chmod +x /usr/bin/mistatus
+		chmod 777 /etc/init.d/mizram
+		chmod 644 /etc/systemd/system/cpupower.service
+		chmod 644 /etc/systemd/system/wiperam.service
+		chmod 777 /etc/profile.d/miulimit.sh
+		chmod 777 /usr/bin/kzombie
+		chmod 777 /usr/bin/passgen-all
+		chmod 777 /usr/bin/post-apt
+		chmod 777 /usr/bin/clearmem
+		chmod 777 /usr/bin/sinfallas-base
+		chmod 777 /usr/bin/cgroup_clean
+		chmod 777 /usr/bin/mistatus
+		chmod 777 /usr/bin/mijail
+		chmod 777 /usr/bin/wiperam
 		update-rc.d mizram defaults
 		systemctl daemon-reload
 		systemctl enable cpupower.service
+		systemctl disable wiperam.service
 		source /usr/bin/sinfallas-base
+		source /usr/bin/mijail
 	;;
 
 	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear|abort-deconfigure|abort-remove)

@@ -1,0 +1,15 @@
+[Unit]
+Description=Wipe RAM before Shutdown
+Conflicts=reboot.target
+After=cpupower.service
+Before=shutdown.target umount.target final.target halt.target
+
+[Service]
+Type=exec
+RemainAfterExit=true
+ExecStart=/bin/true
+ExecStop=/usr/bin/wiperam
+TimeoutSec=300min
+
+[Install]
+WantedBy=multi-user.target

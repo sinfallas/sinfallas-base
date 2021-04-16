@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 # Made by Sinfallas <sinfallas@yahoo.com>
 # Licence: GPL-2
-#set -euo pipefail
 LC_ALL=C
 SECONDS=0
-mylog="/var/log/$(basename $0).log"
-LOCKFILE="/tmp/$(basename $0)_$(whoami)"
+mylog="/var/log/$(basename "$0").log"
+LOCKFILE="/tmp/$(basename "$0")_$(whoami)"
 LOCKFD="150"
 quien=$(who | cut -d' ' -f1 | sort | uniq)
-ss=/home/$quien/.ssh
-gg=/home/$quien/.gnupg
-gdonde=$gg/gpg.conf
+quienh=$(ls -l /home | awk '{print $9}' | grep -v "lost+found" | tail -n +2)
+memor=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 name="/etc/sysctl.d/10-calc-mem.conf"
 limi="/etc/security/limits.conf"
 bah="/root/.bashrc"
@@ -20,39 +18,39 @@ fst="/etc/fstab"
 emod="/etc/modules"
 logd="/etc/login.defs"
 rkh="/etc/rkhunter.conf"
-yo="/home/$quien/.bashrc"
 sysf="/etc/sysfs.conf"
 log2="/etc/log2ram.conf"
 cpas="/etc/pam.d/common-password"
-
+black="/etc/modprobe.d/blacklist.conf"
+syst="/etc/systemd/system.conf"
+jour="/etc/systemd/journald.conf"
+reso="/etc/systemd/resolved.conf"
+mgrub="/etc/default/grub"
 function calcmem() {
-	memor=$(grep MemTotal /proc/meminfo | awk '{print $2}')
-	mb=$(( $memor * 1024 ))
-	mf=$(( $memor * 3/100 ))
-	fm=$(( $mb / 4194304 * 256 ))
-	mo=$(( $mb * 0,10 / 65536 ))
-	mt=$(( $fm * 2 ))
+	mb=$(( memor * 1024 ))
+	mf=$(( memor * 3/100 ))
+	fm=$(( mb * 256 / 4194304 ))
+	mt=$(( fm * 2 ))
 	page_size=$(getconf PAGE_SIZE)
 	phys_pages=$(getconf _PHYS_PAGES)
-	shmall=$(( $phys_pages / 2 ))
-	shmmax=$(( $shmall * $page_size ))
+	shmall=$(( phys_pages / 2 ))
+	shmmax=$(( shmall * page_size ))
 	echo "kernel.shmmax = $shmmax" > "$name"
 	echo "kernel.shmall = $shmall" >> "$name"
 	echo "vm.min_free_kbytes = $mf" >> "$name"
 	echo "fs.file-max = $fm" >> "$name"
-	#echo "net.ipv4.tcp_max_orphans = $mo" >> "$name"
 	echo "net.ipv4.tcp_max_tw_buckets = $mt" >> "$name"
-	if (( $memor < 1024000 )); then
+	if (( memor < 1024000 )); then
 	        echo "vm.dirty_ratio = 30" >> "$name"
 	        echo "vm.dirty_background_ratio = 3" >> "$name"
 	        echo "vm.dirty_expire_centisecs = 750" >> "$name"
 	        echo "vm.dirty_writeback_centisecs = 125" >> "$name"
 	else
-	        if (( $memor > 4096000 )); then
+	        if (( memor > 4096000 )); then
 	            echo "vm.swappiness = 10" >> "$name"
 	            echo "vm.vfs_cache_pressure = 50" >> "$name"
 	        fi
-	        if (( $memor < 8192000 )); then
+	        if (( memor < 8192000 )); then
 	            echo "vm.dirty_ratio = 25" >> "$name"
 	            echo "vm.dirty_background_ratio = 4" >> "$name"
 	            echo "vm.dirty_expire_centisecs = 1500" >> "$name"
@@ -64,122 +62,192 @@ function calcmem() {
 	            echo "vm.dirty_writeback_centisecs = 500" >> "$name"
 	        fi
 	fi
-	sysctl --system > /dev/null
 }
-
 function clean_1() {
-	rm -f /run/$(basename $0).pid
+	rm -f /run/$(basename "$0").pid
 	rm -rf /tmp/*
 	rm -rf /var/tmp/*
-	rm -f $LOCKFILE
+	rm -f "$LOCKFILE"
 }
-
 function lock() {
-	echo {LOCKFD}>$LOCKFILE
+	echo {LOCKFD}>"$LOCKFILE"
 	flock -n $LOCKFD
 }
-
 function exit_error() {
 	echo -e "\e[00;31mYa hay una instancia en ejecución. Saliendo\e[00m"
 	exit 1
 }
-
-trap "clean_1; exit" 0 1 2 3 9 15
+trap "clean_1; exit" 0 1 2 3 15
 if [[ "$EUID" != "0" ]]; then
 	echo -e "\e[00;31mERROR: Debes ser root.\e[00m"
 	exit 1
 fi
-echo $BASHPID > /run/"$(basename $0)".pid
-echo "" > $mylog
-exec 2>>$mylog
+if [[ -z $(cat /etc/os-release | grep "UBUNTU_CODENAME=focal") ]]; then
+	echo "ERROR: Este paquete esta diseñado para ejecutarse solo en Ubuntu 20.04"
+	exit 0
+fi
+echo "$BASHPID" > /run/$(basename "$0").pid
+echo "" > "$mylog"
+exec 2>>"$mylog"
 
 lock || exit_error
-
-echo $quien
-if [[ -z $(grep -i 'tmpfs /tmp tmpfs rw,nodev,noatime,nosuid,noexec 0 0' $fst) ]]; then
-	echo "tmpfs /tmp tmpfs rw,nodev,noatime,nosuid,noexec 0 0" >> $fst
+echo -e "\e[00;1;92mIniciando optimizacion.\e[00m"
+if ! [[ -d /etc/sysctl.d ]]; then
+	mkdir -p /etc/sysctl.d
 fi
-if [[ -z $(grep -i 'tmpfs /var/cache/samba tmpfs rw,noatime,nodev 0 0' $fst) ]]; then
-	echo "tmpfs /var/cache/samba tmpfs rw,noatime,nodev 0 0" >> $fst
+if [[ -z $(grep -i 'tmpfs /tmp tmpfs' $fst) ]]; then
+	echo "tmpfs /tmp tmpfs rw,nodev,noatime,nosuid,noexec,mode=666 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/tmp tmpfs/d' "$fst"
+	echo "tmpfs /tmp tmpfs rw,nodev,noatime,nosuid,noexec,mode=666 0 0" >> "$fst"
 fi
-if [[ -z $(grep -i 'tmpfs /var/cache/apt/archives tmpfs rw,noatime,nodev 0 0' $fst) ]]; then
-	echo "tmpfs /var/cache/apt/archives tmpfs rw,noatime,nodev 0 0" >> $fst
+if [[ -z $(grep -i 'tmpfs /var/cache/samba tmpfs' $fst) ]]; then
+	echo "tmpfs /var/cache/samba tmpfs rw,noatime,nodev 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/var\/cache\/samba tmpfs/d' "$fst"
+	echo "tmpfs /var/cache/samba tmpfs rw,noatime,nodev 0 0" >> "$fst"
 fi
-if [[ -z $(grep -i 'tmpfs /var/cache/apt/apt-fast tmpfs rw,noatime,nodev 0 0' $fst) ]]; then
-	echo "tmpfs /var/cache/apt/apt-fast tmpfs rw,noatime,nodev 0 0" >> $fst
+if [[ -z $(grep -i 'tmpfs /var/cache/apt/archives tmpfs' $fst) ]]; then
+	echo "tmpfs /var/cache/apt/archives tmpfs rw,noatime,nodev 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/var\/cache\/apt\/archives tmpfs/d' "$fst"
+	echo "tmpfs /var/cache/apt/archives tmpfs rw,noatime,nodev 0 0" >> "$fst"
 fi
-if [[ -z $(grep -i 'tmpfs /var/tmp tmpfs rw,noexec,nodev,noatime,nosuid 0 0' $fst) ]]; then
-	echo "tmpfs /var/tmp tmpfs rw,noexec,nodev,noatime,nosuid 0 0" >> $fst
+if [[ -z $(grep -i 'tmpfs /var/cache/apt/apt-fast tmpfs' $fst) ]]; then
+	echo "tmpfs /var/cache/apt/apt-fast tmpfs rw,noatime,nodev 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/var\/cache\/apt\/apt-fast tmpfs/d' "$fst"
+	echo "tmpfs /var/cache/apt/apt-fast tmpfs rw,noatime,nodev 0 0" >> "$fst"
 fi
-if [[ -z $(grep -i 'proc /proc proc defaults,hidepid=2 0 0' $fst) ]]; then
-	echo "proc /proc proc defaults,hidepid=2 0 0" >> $fst
+if [[ -z $(grep -i 'tmpfs /var/tmp tmpfs' $fst) ]]; then
+	echo "tmpfs /var/tmp tmpfs rw,noexec,nodev,noatime,nosuid,mode=666 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/var\/tmp tmpfs/d' "$fst"
+	echo "tmpfs /var/tmp tmpfs rw,noexec,nodev,noatime,nosuid,mode=666 0 0" >> "$fst"
 fi
-if [[ -z $(grep -i 'tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0' $fst) ]]; then
-	echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> $fst
+if [[ -z $(grep -i 'proc /proc proc' $fst) ]]; then
+	echo "proc /proc proc defaults,hidepid=2 0 0" >> "$fst"
+else
+	sed -i '/proc \/proc proc/d' "$fst"
+	echo "proc /proc proc defaults,hidepid=2 0 0" >> "$fst"
 fi
-if [[ -z $(grep -i 'tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0' $fst) ]]; then
-	echo "tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0" >> $fst
+if [[ -z $(grep -i 'tmpfs /run tmpfs' $fst) ]]; then
+	echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=655 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/run tmpfs/d' "$fst"
+	echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=655 0 0" >> "$fst"
+fi
+if [[ -z $(grep -i 'tmpfs /dev/shm tmpfs' $fst) ]]; then
+	echo "tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/dev\/shm tmpfs/d' "$fst"
+	echo "tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0" >> "$fst"
+fi
+if [[ -z $(grep -i 'tmpfs /run/shm tmpfs' $fst) ]]; then
+	echo "tmpfs /run/shm tmpfs ro,noexec,nosuid,noatime,mode=666 0 0" >> "$fst"
+else
+	sed -i '/tmpfs \/run\/shm tmpfs/d' "$fst"
+	echo "tmpfs /run/shm tmpfs ro,noexec,nosuid,noatime,mode=666 0 0" >> "$fst"
 fi
 if [[ -f /etc/initramfs-tools/initramfs.conf ]]; then
 	sed -i 's/MODULES=most/MODULES=dep/g' /etc/initramfs-tools/initramfs.conf
+	echo "RESUME=UUID=$(blkid | grep swap | grep PARTUUID | awk '{print $2}' | sed 's/.$//g' | cut -d '"' -f2)" > /etc/initramfs-tools/conf.d/resume
 	update-initramfs -c -k all
 fi
-if ! [[ -f /root/.base ]]; then
-	#echo "tmpfs /var/spool tmpfs rw,noatime,nodev 0 0" >> $fst
-	sed -i "s/127.0.0.1\tlocalhost/127.0.0.1\tlocalhost $HOSTNAME/g" /etc/hosts
-	sed -i 's/GRUB_TIMEOUT_STYLE=hidden/GRUB_TIMEOUT_STYLE=menu/g' /etc/default/grub
-	sed -i 's/GRUB_TIMEOUT=0/GRUB_TIMEOUT=3/g' /etc/default/grub
-	update-grub2
-	touch /root/.base
+for j in ${quienh[@]}; do
+	miid=$(id -u $j)
+	mbash="/home/"$j"/.bashrc"
+	mssh="/home/"$j"/.ssh"
+	if (( memor > 4096000 )); then
+		if [[ -z $(grep -i "tmpfs /home/$j/" $fst) ]]; then
+			echo "tmpfs /home/$j/.cache tmpfs noatime,noexec,nosuid,nodev,rw,mode=700,uid=$miid,gid=$miid 0 0" >> "$fst"
+		else
+			sed -i "/tmpfs \/home\/$j\/.cache/d" "$fst"
+			echo "tmpfs /home/$j/.cache tmpfs noatime,noexec,nosuid,nodev,rw,mode=700,uid=$miid,gid=$miid 0 0" >> "$fst"
+		fi
+	fi
+	if ! [[ -f /home/"$j"/.gnupg/gpg.conf.old ]]; then
+		mkdir -p /home/"$j"/.gnupg
+		mv -f /home/"$j"/.gnupg/gpg.conf /home/"$j"/.gnupg/gpg.conf.old
+		cp -f /usr/share/gpg.conf.sample /home/"$j"/.gnupg/gpg.conf
+		chown -R "$j":"$j" /home/"$j"/.gnupg
+		chmod -R 700 /home/"$j"/.gnupg
+	fi
+	if ! [[ -d /home/"$j"/.config/autostart ]]; then
+		mkdir -p /home/"$j"/.config/autostart
+	fi
+	mkdir -p "$mssh"
+	chown -R "$j":"$j" "$mssh"
+	chmod -R 700 "$mssh"
+	if [[ -z $(grep -i '"$PS1"' $mbash) ]]; then
+		echo 'if [ "$PS1" ] ;' >> "$mbash"
+		echo '	then mkdir -m 0700 /dev/cgroup/cpu/user/$$' >> "$mbash"
+		echo '	echo $$ > /dev/cgroup/cpu/user/$$/tasks' >> "$mbash"
+		echo '	echo "1" > /dev/cgroup/cpu/user/$$/notify_on_release' >> "$mbash"
+		echo 'fi' >> "$mbash"
+	fi
+done
+if [[ $(dpkg --get-selections | grep -w "ssh" | awk '{print $1}' | head -1) = ssh ]]; then
+	if ! [[ -f /etc/ssh/moduli.old ]]; then
+		awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp
+		mv -f /etc/ssh/moduli /etc/ssh/moduli.old
+		mv -f /etc/ssh/moduli.tmp /etc/ssh/moduli
+	fi
 fi
-if ! [[ -f /home/$quien/.gnupg/gpg.conf.old ]]; then
-	mkdir -p $gg
-	mv -f $gdonde $gg/gpg.conf.old
-	cp -f /usr/share/gpg.conf.sample $gdonde
-	chown -R $quien:$quien $gg
-	chmod -R 700 $gg
-fi
+ssh-keygen -A
 if ! [[ -f /usr/bin/mizram ]]; then
 	ln -s /etc/init.d/mizram /usr/bin/mizram
 fi
-if [[ -z $(grep -i lp $emod) ]]; then
-	echo "lp" >> $emod
+if [[ -z $(grep -i "blacklist cramfs" $black) ]]; then
+	echo "blacklist cramfs" >> "$black"
 fi
-if [[ -z $(grep -i freevxfs $emod) ]]; then
-	echo "freevxfs" >> $emod
+if [[ -z $(grep -i "blacklist freevxfs" $black) ]]; then
+	echo "blacklist freevxfs" >> "$black"
 fi
-if [[ -z $(grep -i jffs2 $emod) ]]; then
-	echo "jffs2" >> $emod
+if [[ -z $(grep -i "blacklist hfs" $black) ]]; then
+	echo "blacklist hfs" >> "$black"
 fi
-if [[ -z $(grep -i udf $emod) ]]; then
-	echo "udf" >> $emod
+if [[ -z $(grep -i "blacklist hfsplus" $black) ]]; then
+	echo "blacklist hfsplus" >> "$black"
 fi
-if [[ -z $(grep -i cramfs $emod) ]]; then
-	echo "cramfs" >> $emod
+if [[ -z $(grep -i "blacklist jffs2" $black) ]]; then
+	echo "blacklist jffs2" >> "$black"
 fi
-if [[ -z $(grep -i hfs $emod) ]]; then
-	echo "hfs" >> $emod
+if [[ -z $(grep -i "blacklist udf" $black) ]]; then
+	echo "blacklist udf" >> "$black"
 fi
-if [[ -z $(grep -i hfsplus $emod) ]]; then
-	echo "hfsplus" >> $emod
+if [[ -z $(grep -i "blacklist dccp" $black) ]]; then
+	echo "blacklist dccp" >> "$black"
+fi
+if [[ -z $(grep -i "blacklist sctp" $black) ]]; then
+	echo "blacklist sctp" >> "$black"
+fi
+if [[ -z $(grep -i "blacklist rds" $black) ]]; then
+	echo "blacklist rds" >> "$black"
+fi
+if [[ -z $(grep -i "blacklist tipc" $black) ]]; then
+	echo "blacklist tipc" >> "$black"
+fi
+if [[ -z $(grep -i "blacklist lp" $black) ]]; then
+	echo "blacklist lp" >> "$black"
 fi
 if [[ -z $(grep -i "alias rotorar='unrar e -kb -y'" $etbah) ]]; then
-	echo "alias rotorar='unrar e -kb -y'" >> $etbah
+	echo "alias rotorar='unrar e -kb -y'" >> "$etbah"
 fi
 if [[ -z $(grep -i 'export HISTIGNORE="ls:clear"' $etbah) ]]; then
-	echo 'export HISTIGNORE="ls:clear"' >> $etbah
+	echo 'export HISTIGNORE="ls:clear"' >> "$etbah"
 fi
 if [[ -z $(grep -i "shopt -s checkwinsize" $etbah) ]]; then
-	echo "shopt -s checkwinsize" >> $etbah
+	echo "shopt -s checkwinsize" >> "$etbah"
 fi
 if [[ -z $(grep -i "HISTFILESIZE=2000" $etbah) ]]; then
-	echo "HISTFILESIZE=2000" >> $etbah
+	echo "HISTFILESIZE=2000" >> "$etbah"
 fi
 if [[ -z $(grep -i "HISTSIZE=1000" $etbah) ]]; then
-	echo "HISTSIZE=1000" >> $etbah
+	echo "HISTSIZE=1000" >> "$etbah"
 fi
 if [[ -z $(grep -i "HISTCONTROL=ignoreboth" $etbah) ]]; then
-	echo "HISTCONTROL=ignoreboth" >> $etbah
+	echo "HISTCONTROL=ignoreboth" >> "$etbah"
 fi
 if [[ -z $(lscpu | grep GenuineIntel) ]]; then	
 	if [[ -z $(grep -i 'INTEL_BATCH="1"' /etc/environment) ]]; then
@@ -187,19 +255,19 @@ if [[ -z $(lscpu | grep GenuineIntel) ]]; then
 	fi
 fi
 if [[ -z $(grep -i "#kernel.kptr_restrict = 1" /etc/sysctl.d/10-kernel-hardening.conf) ]]; then
-	sed -i 's/kernel.kptr_restrict = 1/#kernel.kptr_restrict = 1/g' /etc/sysctl.d/10-kernel-hardening.conf
+	sed -i 's/kernel.kptr_restrict =.*/#kernel.kptr_restrict = 1/g' /etc/sysctl.d/10-kernel-hardening.conf
 fi
 if [[ -z $(grep -i "#kernel.sysrq = 176" /etc/sysctl.d/10-magic-sysrq.conf) ]]; then
-	sed -i 's/kernel.sysrq = 176/#kernel.sysrq = 176/g' /etc/sysctl.d/10-magic-sysrq.conf
+	sed -i 's/kernel.sysrq =.*/#kernel.sysrq = 176/g' /etc/sysctl.d/10-magic-sysrq.conf
 fi	
 if [[ -z $(grep -i "#net.ipv4.conf.default.rp_filter=2" /etc/sysctl.d/10-network-security.conf) ]]; then
-	sed -i 's/net.ipv4.conf.default.rp_filter=2/#net.ipv4.conf.default.rp_filter=2/g' /etc/sysctl.d/10-network-security.conf
+	sed -i 's/net.ipv4.conf.default.rp_filter=.*/#net.ipv4.conf.default.rp_filter=2/g' /etc/sysctl.d/10-network-security.conf
 fi		
 if [[ -z $(grep -i "#net.ipv4.conf.all.rp_filter=2" /etc/sysctl.d/10-network-security.conf) ]]; then
-	sed -i 's/net.ipv4.conf.all.rp_filter=2/#net.ipv4.conf.all.rp_filter=2/g' /etc/sysctl.d/10-network-security.conf
+	sed -i 's/net.ipv4.conf.all.rp_filter=.*/#net.ipv4.conf.all.rp_filter=2/g' /etc/sysctl.d/10-network-security.conf
 fi	
 if [[ -z $(grep -i "#kernel.yama.ptrace_scope = 1" /etc/sysctl.d/10-ptrace.conf) ]]; then
-	sed -i 's/kernel.yama.ptrace_scope = 1/#kernel.yama.ptrace_scope = 1/g' /etc/sysctl.d/10-ptrace.conf
+	sed -i 's/kernel.yama.ptrace_scope =.*/#kernel.yama.ptrace_scope = 1/g' /etc/sysctl.d/10-ptrace.conf
 fi
 if [[ -z $(grep -i 'WARNING: unauthorized access to this system is prohibited.' /etc/issue) ]]; then
 	echo 'WARNING: unauthorized access to this system is prohibited.' >> /etc/issue
@@ -211,53 +279,52 @@ if [[ -z $(grep -i '#Listen localhost:631' /etc/cups/cupsd.conf) ]]; then
 	sed -i 's/Listen localhost:631/#Listen localhost:631/g' /etc/cups/cupsd.conf
 	chmod 600 /etc/cups/cupsd.conf
 fi
+if [[ -z $(grep -i 'ENABLED="0"' /etc/default/irqbalance) ]]; then
+	echo 'ENABLED="0"' >> /etc/default/irqbalance
+fi
 if [[ -f /etc/init.d/rc ]]; then
-	sed -i 's/umask 022/umask 027/g' /etc/init.d/rc
+	sed -i 's/umask.*/umask 027/g' /etc/init.d/rc
 fi
 if [[ -f /etc/cups/cups-browsed.conf ]]; then
-	sed -i 's/BrowseRemoteProtocols dnssd cups/BrowseRemoteProtocols none/g' /etc/cups/cups-browsed.conf
-	sed -i 's/# BrowseProtocols none/BrowseProtocols none/g' /etc/cups/cups-browsed.conf
+	sed -i 's/BrowseRemoteProtocols.*/BrowseRemoteProtocols none/g' /etc/cups/cups-browsed.conf
+	sed -i 's/# BrowseProtocols.*/BrowseProtocols none/g' /etc/cups/cups-browsed.conf
 fi
 if [[ -f /etc/avahi/avahi-daemon.conf ]]; then
 	sed -i 's/#host-name=foo/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf
 fi
 if [[ -f $logd ]]; then
-	sed -i 's/# SHA_CRYPT_MIN_ROUNDS 5000/SHA_CRYPT_MIN_ROUNDS 5000/g' $logd
-	sed -i 's/# SHA_CRYPT_MAX_ROUNDS 5000/SHA_CRYPT_MAX_ROUNDS 10000/g' $logd
-	sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t180/g' $logd
-	sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/g' $logd
-	sed -i 's/UMASK\t\t022/UMASK\t\t027/g' $logd
+	sed -i 's/# SHA_CRYPT_MIN_ROUNDS.*/SHA_CRYPT_MIN_ROUNDS 5000/g' "$logd"
+	sed -i 's/# SHA_CRYPT_MAX_ROUNDS.*/SHA_CRYPT_MAX_ROUNDS 10000/g' "$logd"
+	sed -i 's/PASS_MAX_DAYS.*/PASS_MAX_DAYS\t180/g' "$logd"
+	sed -i 's/PASS_MIN_DAYS.*/PASS_MIN_DAYS\t1/g' "$logd"
+	sed -i 's/UMASK\t\t022/UMASK\t\t027/g' "$logd"
 	if [[ -z $(grep -i 'HOME_MODE 0750' $logd) ]]; then
-		echo "HOME_MODE 0750" >> $logd
+		echo "HOME_MODE 0750" >> "$logd"
 	fi
 fi
 if [[ -f /etc/adduser.conf ]]; then
 	sed -i 's_DSHELL=/bin/bash_DSHELL=/usr/bin/fish_g' /etc/adduser.conf
-	sed -i 's/DIR_MODE=0755/DIR_MODE=0750/g' /etc/adduser.conf
+	sed -i 's/DIR_MODE=.*/DIR_MODE=0750/g' /etc/adduser.conf
 fi
 if [[ -f /etc/default/keyboard ]]; then
-	sed -i 's/XKBOPTIONS=""/XKBOPTIONS="terminate:ctrl_alt_bksp"/g' /etc/default/keyboard
+	sed -i 's/XKBOPTIONS=.*/XKBOPTIONS="terminate:ctrl_alt_bksp"/g' /etc/default/keyboard
 fi
 if [[ -f /etc/passwd ]]; then
 	sed -i 's_/bin/bash_/usr/bin/fish_g' /etc/passwd
 fi
 if [[ -f /etc/default/prelink ]]; then
-	sed -i 's/PRELINKING=unknown/PRELINKING=yes/g' /etc/default/prelink
-	sed -i 's/PRELINK_OPTS=-mR/PRELINK_OPTS=-amR/g' /etc/default/prelink
+	sed -i 's/PRELINKING=.*/PRELINKING=yes/g' /etc/default/prelink
+	sed -i 's/PRELINK_OPTS=.*/PRELINK_OPTS=-amfR/g' /etc/default/prelink
 fi
 if [[ -f $rkh ]]; then
-	sed -i 's\UPDATE_MIRRORS=0\UPDATE_MIRRORS=1\g' $rkh
-	sed -i 's\MIRRORS_MODE=1\MIRRORS_MODE=0\g' $rkh
-	sed -i 's\WEB_CMD="/bin/false"\#WEB_CMD="/bin/false"\g' $rkh
-	sed -i 's\SCRIPTWHITELIST=/usr/bin/egrep\SCRIPTWHITELIST=/bin/egrep\g' $rkh
-	sed -i 's\SCRIPTWHITELIST=/usr/bin/fgrep\SCRIPTWHITELIST=/bin/fgrep\g' $rkh
+	sed -i 's\UPDATE_MIRRORS=.*\UPDATE_MIRRORS=1\g' "$rkh"
+	sed -i 's\MIRRORS_MODE=.*\MIRRORS_MODE=0\g' "$rkh"
+	sed -i 's\WEB_CMD="/bin/false"\#WEB_CMD="/bin/false"\g' "$rkh"
+	sed -i 's\SCRIPTWHITELIST=/usr/bin/egrep\SCRIPTWHITELIST=/bin/egrep\g' "$rkh"
+	sed -i 's\SCRIPTWHITELIST=/usr/bin/fgrep\SCRIPTWHITELIST=/bin/fgrep\g' "$rkh"
 fi
 if [[ -f /etc/default/motd-news ]]; then
-	sed -i 's\ENABLED=1\ENABLED=0\g' /etc/default/motd-news
-fi
-if [[ -f /etc/systemd/system.conf ]]; then
-	sed -i 's\#DefaultTimeoutStopSec=90s\DefaultTimeoutStopSec=10s\g' /etc/systemd/system.conf
-	sed -i 's\#CtrlAltDelBurstAction=reboot-force\CtrlAltDelBurstAction=reboot-force\g' /etc/systemd/system.conf
+	sed -i 's\ENABLED=.*\ENABLED=0\g' /etc/default/motd-news
 fi
 if [[ -f /etc/xdg/autostart/tracker-miner-fs.desktop ]]; then
 	mv -f /etc/xdg/autostart/tracker-miner-fs.desktop /root/
@@ -266,116 +333,127 @@ if [[ -f /etc/xdg/autostart/tracker-miner-fs.desktop ]]; then
 	mv -f /etc/xdg/autostart/tracker-miner-user-guides.desktop /root/
 	mv -f /etc/xdg/autostart/tracker-store.desktop /root/
 	chmod 666 /usr/libexec/tracker-miner-fs
-	#chmod 666 /usr/libexec/tracker-store
 	chmod 666 /usr/libexec/tracker-extract
 	chmod 666 /usr/libexec/tracker-writeback
 	echo "TimeoutStartSec=2" >> /usr/share/dbus-1/services/org.freedesktop.Tracker1.service
 fi
-if [[ $(dpkg --get-selections | grep -w "ssh" | awk '{print $1}' | head -1) = ssh ]]; then
-	mkdir -p $ss
-	chown -R $quien:$quien $ss
-	chmod -R 700 $ss
-	if ! [[ -f /etc/ssh/moduli.old ]]; then
-		awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp
-		mv -f /etc/ssh/moduli /etc/ssh/moduli.old
-		mv -f /etc/ssh/moduli.tmp /etc/ssh/moduli
+if [[ -z $(grep -i '"$PS1"' $bah) ]]; then
+	echo 'if [ "$PS1" ] ;' >> "$bah"
+	echo '	then mkdir -m 0700 /dev/cgroup/cpu/user/$$' >> "$bah"
+	echo '	echo $$ > /dev/cgroup/cpu/user/$$/tasks' >> "$bah"
+	echo '	echo "1" > /dev/cgroup/cpu/user/$$/notify_on_release' >> "$bah"
+	echo 'fi' >> "$bah"
+fi
+if [[ -z $(grep -i 'apparmor=1 lsm=lockdown,yama,apparmor' $mgrub) ]]; then
+	sed -i 's/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=menu/g' "$mgrub"
+	sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=3/g' "$mgrub"
+	sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3 apparmor=1 lsm=lockdown,yama,apparmor ipv6.disable=1 panic=10 quiet"/g' "$mgrub"
+	update-grub2
+fi
+if [[ -z $(grep -i 'libahci.ignore_sss=1' $mgrub) ]]; then
+	if ! [[ -z $(dmesg | grep SSS) ]]; then
+		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="libahci.ignore_sss=1 loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3 apparmor=1 lsm=lockdown,yama,apparmor ipv6.disable=1 panic=10 quiet"/g' "$mgrub"
+		update-grub2
 	fi
 fi
-if ! [[ -d /home/$quien/.config/autostart ]]; then
-	mkdir -p /home/$quien/.config/autostart
-fi
-if ! [[ -d /etc/sysctl.d ]]; then
-	mkdir -p /etc/sysctl.d
-fi
-if [[ -z $(grep -i '"$PS1"' $yo) ]]; then
-	echo 'if [ "$PS1" ] ;' >> $yo
-	echo '	then mkdir -m 0700 /dev/cgroup/cpu/user/$$' >> $yo
-	echo '	echo $$ > /dev/cgroup/cpu/user/$$/tasks' >> $yo
-	echo '	echo "1" > /dev/cgroup/cpu/user/$$/notify_on_release' >> $yo
-	echo 'fi' >> $yo
-fi
-if [[ -z $(grep -i '"$PS1"' $bah) ]]; then
-	echo 'if [ "$PS1" ] ;' >> $bah
-	echo '	then mkdir -m 0700 /dev/cgroup/cpu/user/$$' >> $bah
-	echo '	echo $$ > /dev/cgroup/cpu/user/$$/tasks' >> $bah
-	echo '	echo "1" > /dev/cgroup/cpu/user/$$/notify_on_release' >> $bah
-	echo 'fi' >> $bah
-fi
 yes "" | sensors-detect
-echo "fs.suid_dumpable = 0" > $mise
-echo "fs.aio-max-nr = 1048576" >> $mise
-echo "fs.protected_hardlinks = 1" >> $mise
-echo "fs.protected_symlinks = 1" >> $mise
-echo "vm.mmap_min_addr = 65536" >> $mise
-echo "vm.oom_kill_allocating_task = 1" >> $mise
-echo "vm.watermark_scale_factor = 200" >> $mise
-echo "vm.overcommit_memory = 1" >> $mise
-echo "kernel.core_uses_pid = 1" >> $mise
-echo "kernel.dmesg_restrict = 1" >> $mise
-echo "kernel.kptr_restrict = 2" >> $mise
-echo "kernel.msgmnb = 65535" >> $mise
-echo "kernel.msgmax = 65535" >> $mise
-echo "kernel.pid_max = 65535" >> $mise
-echo "kernel.randomize_va_space = 2" >> $mise
-echo "kernel.sched_autogroup_enabled = 1" >> $mise
-echo "kernel.sched_rt_runtime_us = 950000" >> $mise
-echo "kernel.sched_migration_cost_ns = 5000000" >> $mise
-echo "kernel.shmmni = 8192" >> $mise
-echo "kernel.sysrq = 0" >> $mise
-echo "kernel.yama.ptrace_scope = 2" >> $mise
-echo "kernel.unprivileged_bpf_disabled = 1" >> $mise
-echo "kernel.kexec_load_disabled = 1" >> $mise
-echo "password requisite pam_cracklib.so retry=3 minlen=16 difok=3 ucredit=-1 lcredit=-2 dcredit=-2 ocredit=-2" > $cpas
-echo "password [success=1 default=ignore] pam_unix.so obscure use_authtok try_first_pass sha512 rounds=65536" >> $cpas
-echo "password requisite pam_deny.so" >> $cpas
-echo "password required pam_permit.so" >> $cpas
-echo "password optional pam_gnome_keyring.so" >> $cpas
-echo "# /etc/security/limits.conf" > $limi
-echo "* hard core 0" >> $limi
-echo "* hard nproc 1000" >> $limi
-echo "* soft nofile 2000" >> $limi
-echo "* hard nofile 2000" >> $limi
-echo "# End of file" >> $limi
+echo "PERCENTAGE=2" > /etc/default/zramswap
+echo "PRIORITY=10" >> /etc/default/zramswap
+echo "[Resolve]" > "$reso"
+echo "DNS=127.0.0.53" >> "$reso"
+echo "FallbackDNS=1.1.1.1 1.0.0.1 9.9.9.9" >> "$reso"
+echo "DNSSEC=allow-downgrade" >> "$reso"
+echo "DNSOverTLS=opportunistic" >> "$reso"
+echo "[Manager]" > "$syst"
+echo "DumpCore=no" >> "$syst"
+echo "CtrlAltDelBurstAction=none" >> "$syst"
+echo "CrashShell=no" >> "$syst"
+echo "DefaultLimitCORE=0" >> "$syst"
+echo "DefaultLimitNOFILE=1024" >> "$syst"
+echo "DefaultLimitNPROC=1024" >> "$syst"
+echo "DefaultTimeoutStopSec=10s" >> "$syst"
+echo "fs.suid_dumpable = 0" > "$mise"
+echo "fs.aio-max-nr = 1048576" >> "$mise"
+echo "fs.protected_hardlinks = 1" >> "$mise"
+echo "fs.protected_symlinks = 1" >> "$mise"
+echo "vm.mmap_min_addr = 65536" >> "$mise"
+echo "vm.oom_kill_allocating_task = 1" >> "$mise"
+echo "vm.watermark_scale_factor = 200" >> "$mise"
+echo "vm.overcommit_memory = 1" >> "$mise"
+echo "kernel.core_uses_pid = 1" >> "$mise"
+echo "kernel.dmesg_restrict = 1" >> "$mise"
+echo "kernel.kptr_restrict = 2" >> "$mise"
+echo "kernel.msgmnb = 65535" >> "$mise"
+echo "kernel.msgmax = 65535" >> "$mise"
+echo "kernel.pid_max = 65535" >> "$mise"
+echo "kernel.randomize_va_space = 2" >> "$mise"
+echo "kernel.sched_autogroup_enabled = 1" >> "$mise"
+echo "kernel.sched_rt_runtime_us = 950000" >> "$mise"
+echo "kernel.sched_migration_cost_ns = 5000000" >> "$mise"
+echo "kernel.shmmni = 8192" >> "$mise"
+echo "kernel.sysrq = 0" >> "$mise"
+echo "kernel.yama.ptrace_scope = 2" >> "$mise"
+echo "kernel.unprivileged_bpf_disabled = 1" >> "$mise"
+echo "kernel.kexec_load_disabled = 1" >> "$mise"
+echo "kernel.printk = 3 3 3 3" >> "$mise"
+echo "password requisite pam_cracklib.so retry=3 minlen=16 difok=3 ucredit=-1 lcredit=-2 dcredit=-2 ocredit=-2" > "$cpas"
+echo "password [success=1 default=ignore] pam_unix.so obscure use_authtok try_first_pass sha512 rounds=65536" >> "$cpas"
+echo "password requisite pam_deny.so" >> "$cpas"
+echo "password required pam_permit.so" >> "$cpas"
+echo "password optional pam_gnome_keyring.so" >> "$cpas"
+echo "# /etc/security/limits.conf" > "$limi"
+echo "* hard core 0" >> "$limi"
+echo "* hard nproc 1000" >> "$limi"
+echo "* soft nofile 2000" >> "$limi"
+echo "* hard nofile 2000" >> "$limi"
+echo "# End of file" >> "$limi"
 echo "net.ipv6.conf.all.disable_ipv6 = 1" > /etc/sysctl.d/60-disableipv6.conf
 echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.d/60-disableipv6.conf
 echo "net.ipv6.conf.lo.disable_ipv6 = 1" >> /etc/sysctl.d/60-disableipv6.conf
-echo "kernel/mm/transparent_hugepage/enabled" = always > $sysf
-echo "kernel/mm/transparent_hugepage/khugepaged/pages_to_scan = 20000" >> $sysf
-echo "kernel/mm/ksm/run = 1" >> $sysf
-echo "kernel/mm/ksm/pages_to_scan = 20000" >> $sysf
-echo "kernel/mm/ksm/sleep_millisecs = 200" >> $sysf
-echo "kernel/security/lockdown = confidentiality" >> $sysf
-echo "fs/cgroup/cpu/notify_on_release = 1" >> $sysf
-echo "fs/cgroup/cpu/release_agent = /usr/bin/cgroup_clean" >> $sysf
-#echo "devices/system/cpu/intel_pstate/no_turbo = 1" >> $sysf
-echo "[Journal]" > /etc/systemd/journald.conf
-echo "SystemMaxUse=50M" >> /etc/systemd/journald.conf
+echo "kernel/mm/transparent_hugepage/enabled = always" > "$sysf"
+echo "kernel/mm/transparent_hugepage/khugepaged/pages_to_scan = 20000" >> "$sysf"
+echo "kernel/mm/ksm/run = 1" >> "$sysf"
+echo "kernel/mm/ksm/pages_to_scan = 20000" >> "$sysf"
+echo "kernel/mm/ksm/sleep_millisecs = 200" >> "$sysf"
+echo "kernel/security/lockdown = confidentiality" >> "$sysf"
+echo "fs/cgroup/cpu/notify_on_release = 1" >> "$sysf"
+echo "fs/cgroup/cpu/release_agent = /usr/bin/cgroup_clean" >> "$sysf"
+echo "[Journal]" > "$jour"
+echo "SystemMaxUse=50M" >> "$jour"
+echo "Storage=persistent" >> "$jour"
+echo "ForwardToSyslog=yes" >> "$jour"
+echo "Compress=yes" >> "$jour"
 echo "multi on" > /etc/host.conf
 echo "order hosts,bind" >> /etc/host.conf
-echo "SIZE=128M" > $log2
-echo "USE_RSYNC=true" >> $log2
-echo "MAIL=false" >> $log2
-echo 'PATH_DISK="/var/log"' >> $log2
-echo "ZL2R=false" >> $log2
-echo "COMP_ALG=lz4" >> $log2
-echo "LOG_DISK_SIZE=100M" >> $log2
-sed -i 's/rotate 4/rotate 1/g' /etc/logrotate.conf
+echo "SIZE=512M" > "$log2"
+echo "USE_RSYNC=true" >> "$log2"
+echo "MAIL=false" >> "$log2"
+echo 'PATH_DISK="/var/log"' >> "$log2"
+echo "ZL2R=false" >> "$log2"
+echo "COMP_ALG=lz4" >> "$log2"
+echo "LOG_DISK_SIZE=500M" >> "$log2"
+sed -i '/lp/d' "$emod"
+sed -i "s/127.0.0.1.*/127.0.0.1\tlocalhost $HOSTNAME/g" /etc/hosts
+sed -i "s/127.0.1.1.*/127.0.1.1\t$HOSTNAME/g" /etc/hosts
+sed -i 's/rotate.*/rotate 1/g' /etc/logrotate.conf
 sed -i 's/weekly/daily/g' /etc/logrotate.conf
 sed -i 's/rotate 7/rotate 1/g' /etc/logrotate.d/rsyslog
 sed -i 's/rotate 4/rotate 1/g' /etc/logrotate.d/rsyslog
 sed -i 's/weekly/daily/g' /etc/logrotate.d/rsyslog
-sed -i 's/#SystemMaxFiles=100/SystemMaxFiles=7/g' /etc/systemd/journald.conf
+sed -i 's/#SystemMaxFiles=.*/SystemMaxFiles=7/g' /etc/systemd/journald.conf
+sed -i 's/AutoEnable=.*/AutoEnable=false/g' /etc/bluetooth/main.conf
+sed -i 's/WaylandEnable=.*/#WaylandEnable=false/g' /etc/gdm3/custom.conf
 chmod 444 /usr/libexec/evolution-calendar-factory
 chmod 750 /home/*
 calcmem
-ssh-keygen -A
-echo "AppArmor status:"
-aa-enabled
-echo "Configurando Firejail"
+passwd -l root
+# reactivar root: passwd -u root
+ufw logging off
+# reactivar registro de ufw: ufw logging low
 firecfg
 firecfg --fix
-for i in $(ls -l /home | awk '{print $9}' | grep -v "lost+found" | tail -n +2); do
-	firecfg --add-users $i
+for i in ${quienh[@]}; do
+	firecfg --add-users "$i"
 done
 apparmor_parser -r /etc/apparmor.d/firejail-default
 aa-enforce firejail-default
@@ -386,9 +464,65 @@ fi
 if [[ -z $(grep -i "apparmor" /etc/firejail/default.profile) ]]; then
 	echo "apparmor" >> /etc/firejail/default.profile
 fi
-echo "Finalizado $(date +%d/%m/%Y)" >> $mylog
-echo "Duracion $SECONDS segundos" >> $mylog
+if [[ $(dpkg --get-selections | grep -w "ModemManager" | awk '{print $1}' | head -1) = ModemManager ]]; then
+	systemctl mask ModemManager.service
+fi
+if [[ $(dpkg --get-selections | grep -w "avahi-daemon" | awk '{print $1}' | head -1) = avahi-daemon ]]; then
+	systemctl mask avahi-daemon.service
+fi
+if [[ $(dpkg --get-selections | grep -w "speech-dispatcher" | awk '{print $1}' | head -1) = speech-dispatcher ]]; then
+	systemctl mask speech-dispatcher.service
+fi
+if [[ $(dpkg --get-selections | grep -w "unattended-upgrades" | awk '{print $1}' | head -1) = unattended-upgrades ]]; then
+	systemctl mask unattended-upgrades
+fi
+if [[ $(dpkg --get-selections | grep -w "clamav-freshclam" | awk '{print $1}' | head -1) = clamav-freshclam ]]; then
+	systemctl mask clamav-freshclam
+fi
+if [[ $(dpkg --get-selections | grep -w "mom" | awk '{print $1}' | head -1) = mom ]]; then
+	systemctl mask mom.service
+fi
+if [[ $(dpkg --get-selections | grep -w "geoclue-2.0" | awk '{print $1}' | head -1) = geoclue-2.0 ]]; then
+	systemctl mask geoclue.service
+fi
+if [[ $(dpkg --get-selections | grep -w "brltty" | awk '{print $1}' | head -1) = brltty ]]; then
+	systemctl mask brltty-udev.service
+	systemctl mask brltty.service
+fi
+if [[ $(dpkg --get-selections | grep -w "apt" | awk '{print $1}' | head -1) = apt ]]; then
+	systemctl mask apt-daily-upgrade.service
+	systemctl mask apt-daily.service
+	systemctl mask apt-daily.timer
+	systemctl mask apt-daily-upgrade.timer
+fi
+if [[ $(dpkg --get-selections | grep -w "postfix" | awk '{print $1}' | head -1) = postfix ]]; then
+	systemctl mask postfix@-.service
+fi
+if [[ $(dpkg --get-selections | grep -w "apport" | awk '{print $1}' | head -1) = apport ]]; then
+	systemctl mask apport-autoreport.service
+	systemctl mask apport.service
+fi
+systemctl mask motd-news.service
+systemctl mask motd-news.timer
+systemctl mask NetworkManager-wait-online.service
+systemctl mask networkd-dispatcher.service
+systemctl mask systemd-networkd.service
+systemctl mask postfix.service
+systemctl mask hv-kvp-daemon
+systemctl mask bluetooth
+systemctl mask irqbalance
+systemctl mask bolt
+systemctl mask spice-vdagentd.service
+systemctl mask spice-vdagent.service
+systemctl mask spice-vdagentd.socket
+systemctl mask plymouth-log.service 
+systemctl mask plymouth.service
+systemctl daemon-reload
+systemctl restart systemd-journald
+systemctl enable upower
+sysctl --system > /dev/null
+echo "Finalizado $(date +%d/%m/%Y)" >> "$mylog"
+echo "Duracion $SECONDS segundos" >> "$mylog"
 echo "Duracion $SECONDS segundos"
-echo "" >> $mylog
+echo "" >> "$mylog"
 echo -e "\e[00;1;92mFinalizado. Se recomienda reiniciar el equipo.\e[00m"
-exit 0

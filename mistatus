@@ -3,15 +3,16 @@
 # Licence: GPL-2
 LC_ALL=C
 quien=$(who | cut -d' ' -f1 | sort | uniq)
-
 if [[ "$EUID" != "0" ]]; then
 	echo -e "\e[00;31mERROR: Debes ser root.\e[00m"
 	exit 1
 fi
-
 clear
 echo -e "\e[00;1;92mEstado de AppArmor (yes)\e[00m"
 aa-enabled
+echo ""
+echo -e "\e[00;1;92mEstado de Execute Disable (active)\e[00m"
+dmesg | grep "Execute Disable"
 echo ""
 echo -e "\e[00;1;92mEstado de la swap\e[00m"
 swapon -s
@@ -33,53 +34,42 @@ echo -e "\e[00;1;92mEstado de transparent_hugepage\e[00m"
 cat /sys/kernel/mm/transparent_hugepage/enabled
 echo ""
 echo -e "\e[00;1;92mEstado de DIR_MODE en adduser (0750)\e[00m"
-cat /etc/adduser.conf | grep "DIR_MODE=0750"
+cat /etc/adduser.conf | grep "DIR_MODE="
 echo ""
 echo -e "\e[00;1;92mEstado de prelink\e[00m"
-cat /etc/default/prelink | grep "PRELINKING=yes"
-cat /etc/default/prelink | grep "PRELINK_OPTS=-amR"
+cat /etc/default/prelink | grep "PRELINKING="
+cat /etc/default/prelink | grep "PRELINK_OPTS="
 echo ""
 echo -e "\e[00;1;92mConfiguracion de limits\e[00m"
 cat /etc/security/limits.conf
 echo ""
-echo -e "\e[00;1;92mValores de calc-mem\e[00m"
-cat /etc/sysctl.d/10-calc-mem.conf
+echo -e "\e[00;1;92mEstado de la shell Fish\e[00m"
+cat /etc/passwd | grep "fish"
 echo ""
-echo -e "\e[00;1;92mEstado de IPv6 (1)\e[00m"
-sysctl --all | grep "net.ipv6.conf.all.disable_ipv6"
+echo -e "\e[00;1;92mValores de sysctl\e[00m"
+for k in $(cat /etc/sysctl.d/10-calc-mem.conf | awk '{print $1}'); do
+	echo original: $(cat /etc/sysctl.d/10-calc-mem.conf | grep "$k")
+	echo detectado: $(sysctl --all | grep "$k =")
+	echo ""
+done
+for j in $(cat /etc/sysctl.d/30-misecurity.conf | awk '{print $1}'); do
+	echo original: $(cat /etc/sysctl.d/30-misecurity.conf | grep "$j")
+	echo detectado: $(sysctl --all | grep "$j =")
+	echo ""
+done
+for i in $(cat /etc/sysctl.d/30-mio.conf | awk '{print $1}'); do
+	echo original: $(cat /etc/sysctl.d/30-mio.conf | grep "$i")
+	echo detectado: $(sysctl --all | grep "$i =")
+	echo ""
+done
+echo original: $(cat /etc/sysctl.d/60-disableipv6.conf | grep "net.ipv6.conf.all.disable_ipv6")
+echo detectado: $(sysctl --all | grep "net.ipv6.conf.all.disable_ipv6")
 echo ""
-echo -e "\e[00;1;92mEstado de overcommit memory (1)\e[00m"
-sysctl --all | grep "vm.overcommit_memory"
+echo -e "\e[00;1;92mEstado de sysfsutils (ON)\e[00m"
+systemctl status sysfsutils
 echo ""
-echo -e "\e[00;1;92mEstado de unprivileged bpf (1)\e[00m"
-sysctl --all | grep "kernel.unprivileged_bpf_disabled"
-echo ""
-echo -e "\e[00;1;92mEstado de kexec load (1)\e[00m"
-sysctl --all | grep "kernel.kexec_load_disabled"
-echo ""
-echo -e "\e[00;1;92mEstado de sysrq (0)\e[00m"
-sysctl --all | grep "kernel.sysrq"
-echo ""
-echo -e "\e[00;1;92mEstado de autogroup (1)\e[00m"
-sysctl --all | grep "kernel.sched_autogroup_enabled"
-echo ""
-echo -e "\e[00;1;92mEstado de randomize_va_space (2)\e[00m"
-sysctl --all | grep "kernel.randomize_va_space"
-echo ""
-echo -e "\e[00;1;92mEstado de kptr_restrict (2)\e[00m"
-sysctl --all | grep "kernel.kptr_restrict"
-echo ""
-echo -e "\e[00;1;92mEstado de dmesg (1)\e[00m"
-sysctl --all | grep "kernel.dmesg_restrict"
-echo ""
-echo -e "\e[00;1;92mEstado de suid_dumpable (0)\e[00m"
-sysctl --all | grep "fs.suid_dumpable"
-echo ""
-echo -e "\e[00;1;92mEstado de protected_hardlinks (1)\e[00m"
-sysctl --all | grep "fs.protected_hardlinks"
-echo ""
-echo -e "\e[00;1;92mEstado de protected_symlinks (1)\e[00m"
-sysctl --all | grep "fs.protected_symlinks"
+echo -e "\e[00;1;92mEstado de haveged (ON)\e[00m"
+systemctl status haveged
 echo ""
 echo -e "\e[00;1;92mEstado de Log2RAM (ON)\e[00m"
 systemctl status log2ram
@@ -89,6 +79,17 @@ systemctl status ssh
 echo ""
 echo -e "\e[00;1;92mEstado de SSHGuard (ON)\e[00m"
 systemctl status sshguard
+echo ""
+echo -e "\e[00;1;92mEstado del Governador del CPU\e[00m"
+cpupower frequency-info
+echo ""
+echo -e "\e[00;1;92mEstado de upower\e[00m"
+systemctl status upower
+echo ""
+echo -e "\e[00;1;92mEstado de ksmtuned\e[00m"
+if [[ $(dpkg --get-selections | grep -w "ksmtuned" | awk '{print $1}' | head -1) = ksmtuned ]]; then
+	systemctl status ksmtuned
+fi
 echo ""
 echo -e "\e[00;1;92mJaulas de Firejail activas\e[00m"
 firejail --list

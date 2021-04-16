@@ -2,4 +2,4 @@ Acquire::Language "none";
 Acquire::PDiffs "false";
 APT::Clean-Installed "true";
 DSELECT::Clean "always";
-DPkg::Post-Invoke {"echo Optimizando, espere...;/usr/bin/post-apt";}
+DPkg::Post-Invoke {"echo Ejecutando Prelink, por favor espere.;/usr/bin/post-apt";}

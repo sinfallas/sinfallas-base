@@ -9,8 +9,9 @@ Vcs-Bzr: lp:~sinfallas/+junk/sinfallas-base
 
 Package: sinfallas-base
 Architecture: all
-Depends: bashtop, testdisk, curl, iucode-tool, prelink, ppa-purge, pv, localepurge, linux-firmware, hwdata, fish, printer-driver-cups-pdf, sysfsutils, net-tools, traceroute, ssh, tmux, iftop, powertop, htop, iotop, rar, p7zip-full, p7zip-rar, atool, nmap, rkhunter, gnupg2, gpgv, linux-tools-generic, linux-cloud-tools-generic, lm-sensors, apt-transport-https, usbguard, libpam-cracklib, acpi, log2ram, mtr-tiny, sshguard, lsof, psmisc, secure-delete, extundelete, base-files, bash, bsdutils, coreutils, diffutils, dmsetup, findutils, grep, hostname, kmod, less, lsb-base, nano, ncurses-base, ncurses-bin, readline-common, sed, sudo, upower, util-linux, util-linux-locales, wget, deborphan, apt-fast, apparmor-utils, firejail-profiles, ${misc:Depends}, ${shlibs:Depends}, ${perl:Depends}
-Conflicts: zeitgeist, rhythmbox-plugin-zeitgeist, zeitgeist-core, zeitgeist-datahub, aptitude, transmission-common, avahi-utils, apport, avahi-autoipd, brltty, bsd-mailx, ubuntu-report
+Pre-Depends: prelink, localepurge, fish, sysfsutils, gnupg2, gpgv, lm-sensors, log2ram, apparmor-utils, firejail-profiles, ssh, logrotate, secure-delete, zram-tools, thermald
+Depends: bashtop, haveged, testdisk, curl, iucode-tool, ppa-purge, pv, linux-firmware, hwdata, net-tools, traceroute, tmux, iftop, powertop, htop, iotop, rar, p7zip-full, p7zip-rar, atool, nmap, rkhunter, linux-tools-generic, linux-tools-generic-hwe-20.04, apt-transport-https, usbguard, libpam-cracklib, acpi, mtr-tiny, sshguard, lsof, psmisc, extundelete, base-files, bash, bsdutils, coreutils, diffutils, dmsetup, findutils, grep, hostname, kmod, less, lsb-base, nano, ncurses-base, ncurses-bin, readline-common, sed, sudo, upower, util-linux, util-linux-locales, wget, deborphan, apt-fast, libblockdev-mdraid2, chkservice, ${misc:Depends}, ${shlibs:Depends}, ${perl:Depends}
+Conflicts: zeitgeist, rhythmbox-plugin-zeitgeist, zeitgeist-core, zeitgeist-datahub, aptitude, transmission-common, apport, brltty, bsd-mailx, ubuntu-report, whoopsie, telnet, arj, command-not-found, gdbserver, gdb, avahi-autoipd, avahi-utils, avahi-daemon, rsyslog
 Description: sinfallas-base
  Homepage: https://sinfallas.wordpress.com/
  Bugs: https://bugs.launchpad.net/~sinfallas

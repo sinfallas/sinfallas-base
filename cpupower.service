@@ -1,9 +1,11 @@
 [Unit]
 Description=CPU performance and ZRAM
+ConditionFileIsExecutable=/etc/init.d/mizram
 
 [Service]
 Type=oneshot
 ExecStart=/etc/init.d/mizram start
+RemainAfterExit=true
 
 [Install]
 WantedBy=multi-user.target
