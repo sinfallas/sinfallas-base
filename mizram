@@ -16,6 +16,8 @@
 case "$1" in
   start)
 	mkdir -p /dev/cgroup/cpu
+	touch /var/log/messages
+	chmod 666 /var/log/messages
 	mount -t cgroup cgroup /dev/cgroup/cpu -o cpu
 	mkdir -m 0777 /dev/cgroup/cpu/user
 	echo "/usr/bin/cgroup_clean" > /dev/cgroup/cpu/release_agent

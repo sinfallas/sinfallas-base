@@ -2,11 +2,8 @@
 # Made by Sinfallas <sinfallas@yahoo.com>
 # Licence: GPL-2
 LC_ALL=C
-quien=$(who | cut -d' ' -f1 | sort | uniq)
-if [[ "$EUID" != "0" ]]; then
-	echo -e "\e[00;31mERROR: Debes ser root.\e[00m"
-	exit 1
-fi
+source /usr/bin/mivariable
+siroot
 clear
 echo -e "\e[00;1;92mEstado de AppArmor (yes)\e[00m"
 aa-enabled

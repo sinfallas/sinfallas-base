@@ -47,20 +47,20 @@ case "$1" in
 		if [[ -f /usr/bin/mistatus ]]; then
 			rm -f /usr/bin/mistatus
 		fi		
-		if [[ -f /root/tracker-miner-fs.desktop ]]; then
-			mv -f /root/tracker-miner-fs.desktop /etc/xdg/autostart/
+		if [[ -f /root/.sinfallas/tracker-miner-fs.desktop ]]; then
+			mv -f /root/.sinfallas/tracker-miner-fs.desktop /etc/xdg/autostart/
 		fi
-		if [[ -f /root/tracker-extract.desktop ]]; then
-			mv -f /root/tracker-extract.desktop /etc/xdg/autostart/
+		if [[ -f /root/.sinfallas/tracker-extract.desktop ]]; then
+			mv -f /root/.sinfallas/tracker-extract.desktop /etc/xdg/autostart/
 		fi
-		if [[ -f /root/tracker-miner-apps.desktop ]]; then
-			mv -f /root/tracker-miner-apps.desktop /etc/xdg/autostart/
+		if [[ -f /root/.sinfallas/tracker-miner-apps.desktop ]]; then
+			mv -f /root/.sinfallas/tracker-miner-apps.desktop /etc/xdg/autostart/
 		fi
-		if [[ -f /root/tracker-miner-user-guides.desktop ]]; then
-			mv -f /root/tracker-miner-user-guides.desktop /etc/xdg/autostart/
+		if [[ -f /root/.sinfallas/tracker-miner-user-guides.desktop ]]; then
+			mv -f /root/.sinfallas/tracker-miner-user-guides.desktop /etc/xdg/autostart/
 		fi
-		if [[ -f /root/tracker-store.desktop ]]; then
-			mv -f /root/tracker-store.desktop /etc/xdg/autostart/
+		if [[ -f /root/.sinfallas/tracker-store.desktop ]]; then
+			mv -f /root/.sinfallas/tracker-store.desktop /etc/xdg/autostart/
 		fi
 		if [[ -f /etc/sysctl.d/60-disableipv6.conf ]]; then
 			rm -f /etc/sysctl.d/60-disableipv6.conf
@@ -94,6 +94,9 @@ case "$1" in
 		fi
 		if [[ -f /etc/thermald/thermal-conf.xml ]]; then
 			rm -f /etc/thermald/thermal-conf.xml
+		fi
+		if [[ -f /usr/bin/beats ]]; then
+			rm -f /usr/bin/beats
 		fi
 		echo "" > /etc/sysctl.d/30-misecurity.conf
 		firecfg --clean

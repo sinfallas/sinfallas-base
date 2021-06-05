@@ -15,12 +15,15 @@ case "$1" in
 		chmod 777 /usr/bin/mistatus
 		chmod 777 /usr/bin/mijail
 		chmod 777 /usr/bin/wiperam
+		chmod 777 /usr/bin/beats
 		update-rc.d mizram defaults
 		systemctl daemon-reload
 		systemctl enable cpupower.service
 		systemctl disable wiperam.service
-		source /usr/bin/sinfallas-base
-		source /usr/bin/mijail
+		if ! [[ -f /root/.sinfallas/actualizar ]]; then
+			source /usr/bin/sinfallas-base
+			source /usr/bin/mijail
+		fi
 	;;
 
 	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear|abort-deconfigure|abort-remove)

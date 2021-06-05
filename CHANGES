@@ -1,4 +1,219 @@
 ------------------------------------------------------------
+revno: 452
+committer: Jesus Palencia <sinfallas@gmail.com>
+branch nick: sinfallas-base
+timestamp: Fri 2021-06-04 19:49:03 -0400
+message:
+  * se agrega el script beats
+  * se agregan algunas comprobaciones a sinfallas-base
+  * se corrige un error al llamar a sensors-detect
+------------------------------------------------------------
+revno: 451
+committer: Jesus Palencia <sinfallas@gmail.com>
+branch nick: sinfallas-base
+timestamp: Tue 2021-06-01 17:45:55 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 450
+committer: Jesus Palencia <sinfallas@gmail.com>
+branch nick: sinfallas-base
+timestamp: Tue 2021-06-01 17:44:17 -0400
+message:
+  * se agrega una correccion de LVM
+------------------------------------------------------------
+revno: 449
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-05-27 19:50:36 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 448
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-05-27 19:49:51 -0400
+message:
+  * se elimina codigo innecesario
+  * se coloca una comprobacion de archivo
+------------------------------------------------------------
+revno: 447
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-05-25 20:16:27 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 446
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-05-25 20:16:14 -0400
+message:
+  * limpieza
+------------------------------------------------------------
+revno: 445
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-05-25 19:59:07 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 444
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-05-25 19:58:45 -0400
+message:
+  * limpieza
+------------------------------------------------------------
+revno: 443
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-05-16 16:28:08 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 442
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-05-16 16:27:29 -0400
+message:
+  * se agregan la variable path que faltaba
+------------------------------------------------------------
+revno: 441
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-05-16 10:10:40 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 440
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-05-16 10:10:17 -0400
+message:
+  * nueva dependencia
+  * bugfix
+------------------------------------------------------------
+revno: 439
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-05-15 13:39:50 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 438
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-05-15 13:39:26 -0400
+message:
+  * optimizaciones
+------------------------------------------------------------
+revno: 437
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-05-15 09:33:05 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 436
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-05-15 09:32:43 -0400
+message:
+  * miscelaneos
+------------------------------------------------------------
+revno: 435
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-05-12 21:04:07 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 434
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-05-12 21:03:47 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 433
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-05-12 20:37:38 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 432
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Wed 2021-05-12 20:37:01 -0400
+message:
+  * se separa mivariable a su propio paquete
+  * se resuelven conflictos de dependencias
+------------------------------------------------------------
+revno: 431
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-05-07 16:51:28 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 430
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Fri 2021-05-07 16:51:14 -0400
+message:
+  * bugfix
+------------------------------------------------------------
+revno: 429
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-05-06 17:28:26 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 428
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Thu 2021-05-06 17:27:59 -0400
+message:
+  * se agrega una comprobacion de gnome-shell
+------------------------------------------------------------
+revno: 427
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-27 22:26:24 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 426
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Tue 2021-04-27 22:25:43 -0400
+message:
+  * se crea un script llamado mivariable para albergar funciones que se usan con frecuencia en los demas script
+------------------------------------------------------------
+revno: 425
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-24 09:19:00 -0400
+message:
+  * changelog
+------------------------------------------------------------
+revno: 424
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sat 2021-04-24 09:18:43 -0400
+message:
+  * comprobacion de fstab
+------------------------------------------------------------
+revno: 423
+committer: Jesus Palencia sinfallas@gmail.com
+branch nick: sinfallas-base
+timestamp: Sun 2021-04-11 11:08:57 -0400
+message:
+  * changelog
+------------------------------------------------------------
 revno: 422
 committer: Jesus Palencia sinfallas@gmail.com
 branch nick: sinfallas-base

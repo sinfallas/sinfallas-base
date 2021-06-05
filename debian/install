@@ -19,3 +19,4 @@ cgroup_clean /usr/bin/
 mistatus /usr/bin/
 mijail /usr/bin/
 wiperam /usr/bin/
+beats /usr/bin/

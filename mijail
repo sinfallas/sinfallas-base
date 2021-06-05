@@ -2,16 +2,14 @@
 # Made by Sinfallas <sinfallas@yahoo.com>
 # Licence: GPL-2
 LC_ALL=C
-if [[ "$EUID" != "0" ]]; then
-	echo -e "\e[00;31mERROR: Debes ser root.\e[00m"
-	exit 1
-fi
-
-echo -e "\e[00;1;92mReconstruyendo perfiles de Firejail.\e[00m"
+source /usr/bin/mivariable
+siroot
+echo "Reconstruyendo perfiles de Firejail."
 playo="/etc/firejail/playonlinux.profile"
 qbit="/etc/firejail/qbittorrent.profile"
 vlcp="/etc/firejail/vlc.profile"
 dropp="/etc/firejail/dropbox.profile"
+gedi="/etc/firejail/gedit.profile"
 #playonlinux
 echo "include playonlinux.local" > "$playo"
 echo "noblacklist "'${HOME}'"/.Steam" >> "$playo"
@@ -143,4 +141,6 @@ echo "#private-dev" >> "$dropp"
 echo "#private-tmp" >> "$dropp"
 echo "noexec /tmp" >> "$dropp"
 echo "ignore apparmor" >> "$dropp"
-echo -e "\e[00;1;92mFinalizado.\e[00m"
+#gedit
+echo "nodbus" > "$gedi"
+echo "Finalizado."
